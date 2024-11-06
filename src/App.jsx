@@ -1,3 +1,4 @@
+import './App.css';
 import React from 'react';
 import { DigitalPass } from './components/DigitalPass';
 import { LocationCard } from './components/LocationCard';
@@ -66,15 +67,17 @@ function App() {
 
         {/* Zona derecha */}
         <div className="space-y-4">
-          {/* Card de proyectos */}
-          <div className="space-y-4">
-            <ProjectsCard />
-          </div>
 
           {/* Card de redes sociales */}
           <div className="space-y-4">
             <SocialCard />
           </div>
+
+          {/* Card de proyectos */}
+          <div className="space-y-4">
+            <ProjectsCard />
+          </div>
+          
         </div>
 
       </header>

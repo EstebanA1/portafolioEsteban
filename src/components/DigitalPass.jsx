@@ -10,13 +10,13 @@ export function DigitalPass() {
         {/* Contenido de la tarjeta */}
         <div className="relative p-6 flex flex-col h-full">
           {/* Logo o nombre */}
-          <div className="text-2xl font-bold mb-8">BabysProduction's</div>
+          <div className="text-2xl font-bold mb-8"></div>
 
           {/* Foto y detalles */}
           <div className="flex flex-col items-center gap-4">
             <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 overflow-hidden">
               <img
-                src="../../../public/profile.jpg"
+                src="../../../src/assets/images/profile.webp"
                 alt="Profile"
                 className="w-full h-full object-cover"
               />
