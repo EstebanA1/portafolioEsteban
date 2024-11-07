@@ -3,7 +3,6 @@ import { MapPin } from 'lucide-react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// Estilo personalizado para ocultar la atribución
 const mapStyles = `
   .leaflet-control-attribution {
     display: none;
@@ -12,7 +11,7 @@ const mapStyles = `
 
 export const LocationCard = () => {
   const [currentTime, setCurrentTime] = useState('');
-  const position = [-36.8271, -73.0498]; // Coordenadas de Concepción
+  const position = [-36.8271, -73.0498];
 
   useEffect(() => {
     const updateTime = () => {
@@ -32,21 +31,19 @@ export const LocationCard = () => {
   }, []);
 
   return (
-    <div className="rounded-3xl bg-black/40 backdrop-blur-sm p-4 border border-white/10 max-w-md">
-      {/* Estilos personalizados */}
+    <div className="rounded-3xl bg-black/40 backdrop-blur-sm p-4 border border-white/10 w-full">
       <style>{mapStyles}</style>
-      
       <div className="relative w-full h-32 rounded-2xl overflow-hidden">
         <div className="absolute inset-0 bg-zinc-900">
-          <MapContainer 
-            center={position} 
-            zoom={9} 
+          <MapContainer
+            center={position}
+            zoom={9}
             zoomControl={false}
             dragging={false}
             touchZoom={false}
             doubleClickZoom={false}
             scrollWheelZoom={false}
-            attributionControl={false} 
+            attributionControl={false}
             style={{ height: '100%', width: '100%', filter: 'brightness(0.7)' }}
           >
             <TileLayer
@@ -55,10 +52,9 @@ export const LocationCard = () => {
             />
           </MapContainer>
         </div>
-        
-        {/* Gradiente sobre el mapa */}
+
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50" />
-        
+
         {/* Información de ubicación */}
         <div className="absolute bottom-3 left-3 text-white z-[1000]">
           <div className="font-medium flex items-center gap-2">
@@ -69,7 +65,7 @@ export const LocationCard = () => {
             {currentTime} (GMT-4)
           </div>
         </div>
-        
+
         {/* Punto de ubicación animado */}
         <div className="absolute right-3 bottom-3 z-[1000]">
           <div className="w-2 h-2 bg-white rounded-full relative">
