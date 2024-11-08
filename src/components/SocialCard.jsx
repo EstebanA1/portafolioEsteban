@@ -21,7 +21,7 @@ export function SocialCard() {
   ];
 
   return (
-    <div className="social-card-container rounded-3xl bg-black/40 backdrop-blur-sm p-6 border border-white/10 max-h-[320px] overflow-y-auto scrollbar-thin">
+    <div className="social-card-container rounded-3xl bg-black/40 backdrop-blur-sm p-6 border border-white/10 max-h-[320px] overflow-y-hidden">
       <h3 className="text-2xl font-bold mb-4">Redes Sociales</h3>
       <div className="hexagon-container">
         {socialLinks.map((social, index) => {

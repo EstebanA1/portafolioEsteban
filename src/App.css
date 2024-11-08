@@ -50,7 +50,7 @@
   }
 
   /* Custom Scroll */
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     .custom-scroll {
       margin-right: -5px ;
     }
@@ -75,7 +75,7 @@
     background-color: #4d4d4d;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     /* Ajustar la grilla en la cabecera */
     .grid-cols-3 {
       grid-template-columns: 1fr;

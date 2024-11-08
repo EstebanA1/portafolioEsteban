@@ -2,11 +2,24 @@ import React from 'react';
 
 function Buttons() {
   const baseUrl = import.meta.env.VITE_PUBLIC_URL || '';
+
+  const handleContactClick = () => {
+    const mailtoLink = "mailto:stbnrivasa@gmail.com?subject=Contacto";
+
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      window.location.href = mailtoLink;
+    } else {
+      window.open('https://mail.google.com/mail/?view=cm&fs=1&to=stbnrivasa@gmail.com&su=Contacto', '_blank');
+    }
+  };
+
   return (
-    <div className="flex flex-col md:flex-row gap-3 max-w-md md:max-w-full">
+    <div className="flex flex-col md:flex-row gap-3 w-full min-[831px]:w-full lg:max-w-full">
       <button
         className="flex-1 rounded-full bg-white text-black font-medium py-2 px-4 hover:bg-white/90 transition-colors"
-        onClick={() => window.open('https://mail.google.com/mail/?view=cm&fs=1&to=stbnrivasa@gmail.com&su=Contacto', '_blank')}
+        onClick={handleContactClick}
       >
         Contacto
       </button>

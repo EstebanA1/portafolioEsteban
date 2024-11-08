@@ -57,9 +57,9 @@ export function ProjectsCard() {
   };
 
   return (
-    <div className="rounded-3xl bg-black/40 p-6 border border-white/10 h-auto lg:h-[400px]">
-      <div className="h-full lg:overflow-y-auto custom-scroll">
-        <h3 className="text-2xl font-bold mb-4 text-center">Proyectos</h3>
+    <div className="rounded-3xl bg-black/40 p-6 border border-white/10 h-auto md:h-[440px] min-[1400px]:h-[380px]">
+    <div className="h-full lg:overflow-y-auto custom-scroll">
+      <h3 className="text-2xl font-bold mb-4 text-center">Proyectos</h3>
         <div className="space-y-4">
           {projects.map((project, index) => (
             <div
