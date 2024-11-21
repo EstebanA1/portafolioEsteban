@@ -26,23 +26,29 @@ function App() {
         </div>
 
         {/* Versión desktop (1024px y superior) */}
-        <div className="hidden lg:grid lg:grid-cols-3 gap-8">
+        <div className="hidden lg:grid lg:grid-cols-3 lg:gap-8 lg:auto-rows-fr">
           {/* Columna izquierda */}
-          <div className="space-y-7">
-            <Information />
-            <LocationCard />
-            <Buttons />
+          <div className="flex flex-col h-full">
+            <div className="flex-grow space-y-8">
+              <Information />
+              <LocationCard />
+            </div>
+            <div className="mt-8">
+              <Buttons />
+            </div>
           </div>
 
           {/* Columna central */}
-          <div>
+          <div className="flex items-start">
             <DigitalPass />
           </div>
 
           {/* Columna derecha */}
-          <div className="space-y-8">
-            <SocialCard />
-            <ProjectsCard />
+          <div className="flex flex-col h-full">
+            <div className="flex-grow space-y-8">
+              <SocialCard />
+              <ProjectsCard />
+            </div>
           </div>
         </div>
       </header>
