@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import Buttons from './components/Buttons';
+import Contact from './components/Contact';
 import Information from './components/Information';
 import { DigitalPass } from './components/DigitalPass';
 import { LocationCard } from './components/LocationCard';
@@ -21,7 +21,7 @@ function App() {
           </div>
           <SocialCard />
           <div className="pb-8">
-            <Buttons />
+            <Contact />
           </div>
         </div>
 
@@ -34,7 +34,7 @@ function App() {
               <LocationCard />
             </div>
             <div className="mt-8">
-              <Buttons />
+              <Contact />
             </div>
           </div>
 

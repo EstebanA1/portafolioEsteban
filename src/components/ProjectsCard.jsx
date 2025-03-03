@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import imgCal from "../assets/images/imgCal.webp";
 import imgRest from "../assets/images/imgRest.webp";
 import imgTesi from "../assets/images/imgTesi.webp";
+import imgMiuvuu from "../assets/images/imgMiuvuu.webp";
 import htmlIcon from '../assets/iconos/html5.svg';
 import cssIcon from '../assets/iconos/css.svg';
 import javascriptIcon from '../assets/iconos/javascript.svg';
@@ -9,6 +10,9 @@ import typescriptIcon from '../assets/iconos/typescript.svg';
 import reactIcon from '../assets/iconos/react.svg';
 import angularIcon from '../assets/iconos/angular.svg';
 import mongodbIcon from '../assets/iconos/mongodb.svg';
+import dockerIcon from '../assets/iconos/docker.svg';
+import pythonIcon from '../assets/iconos/python.svg';
+import postgresqlIcon from '../assets/iconos/postgresql.svg';
 
 const icons = {
   html: htmlIcon,
@@ -18,6 +22,9 @@ const icons = {
   react: reactIcon,
   angular: angularIcon,
   mongodb: mongodbIcon,
+  docker: dockerIcon,
+  python: pythonIcon,
+  postgresql: postgresqlIcon,
 };
 
 const techNames = {
@@ -26,6 +33,8 @@ const techNames = {
   javascript: 'JavaScript',
   typescript: 'TypeScript',
   react: 'React',
+  docker: 'Docker',
+  python: 'Python',
   angular: 'Angular',
   postgresql: 'PostgreSQL',
   mongodb: 'MongoDB',
@@ -36,6 +45,16 @@ export function ProjectsCard() {
   const [selectedProject, setSelectedProject] = useState(null);
 
   const projects = [
+    {
+      title: "Miuvuu",
+      description: "E-commerce minimalista de moda.",
+      tags: ["html", "css", "javascript", "react", "python", "docker", "postgresql"],
+      links: {
+        github: "https://github.com/EstebanA1/miuvuu",
+        linkedin: null,
+      },
+      image: imgMiuvuu
+    },
     {
       title: "Software para Restaurantes",
       description: "Aplicación diseñada para optimizar la experiencia en restaurantes.",
@@ -85,7 +104,7 @@ export function ProjectsCard() {
   };
 
   return (
-    <div className="rounded-3xl bg-black/40 p-6 border border-white/10 flex flex-col h-auto lg:h-[440px] min-[1400px]:h-[380px]">
+    <div className="rounded-3xl bg-black/40 p-6 border border-white/10 flex flex-col h-auto lg:h-[440px] ">
       <h3 className="text-2xl font-bold mb-4 text-center">Proyectos</h3>
       <div className="flex-1 h-full lg:overflow-y-auto custom-scroll">
         <div className="space-y-4 lg:pr-2">

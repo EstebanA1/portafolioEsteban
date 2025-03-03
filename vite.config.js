@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import compression from 'vite-plugin-compression'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import compression from 'vite-plugin-compression';
 
 export default defineConfig({
   base: "/portafolioEsteban/",
@@ -10,9 +10,21 @@ export default defineConfig({
         plugins: ['babel-plugin-react-remove-properties'],
       },
     }),
-    compression({ 
+    compression({
       algorithm: 'brotliCompress',
-      ext: ['.js', '.css', '.html', '.svg']
+      ext: '.js',
+    }),
+    compression({
+      algorithm: 'brotliCompress',
+      ext: '.css',
+    }),
+    compression({
+      algorithm: 'brotliCompress',
+      ext: '.html',
+    }),
+    compression({
+      algorithm: 'brotliCompress',
+      ext: '.svg',
     }),
   ],
   build: {
@@ -34,11 +46,11 @@ export default defineConfig({
     }
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-leaflet'], 
-    exclude: ['@vite/client'] 
+    include: ['react', 'react-dom', 'react-leaflet'],
+    exclude: ['@vite/client']
   },
   performance: {
-    maxEntrypointSize: 500000, 
-    maxAssetSize: 500000 
+    maxEntrypointSize: 500000,
+    maxAssetSize: 500000
   }
 })

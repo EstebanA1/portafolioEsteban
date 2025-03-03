@@ -82,7 +82,7 @@
     }
   
     /* Zona izquierda: ajuste de tamaño en tarjetas */
-    .min-h-[400px] {
+    .min-h-200 {
       min-height: 200px;
     }
     .max-w-md {
@@ -100,6 +100,3 @@
       height: auto;
     }
   }
-  
-
-  

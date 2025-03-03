@@ -7,6 +7,7 @@ import reactIcon from '../assets/iconos/react.svg';
 import angularIcon from '../assets/iconos/angular.svg';
 import postgresqlIcon from '../assets/iconos/postgresql.svg';
 import mongodbIcon from '../assets/iconos/mongodb.svg';
+import dockerIcon from '../assets/iconos/docker.svg';
 
 const icons = {
   html: htmlIcon,
@@ -15,8 +16,9 @@ const icons = {
   typescript: typescriptIcon,
   react: reactIcon,
   angular: angularIcon,
-  postgresql: postgresqlIcon,
+  docker: dockerIcon,
   mongodb: mongodbIcon,
+  postgresql: postgresqlIcon,
 };
 
 const techNames = {
@@ -26,21 +28,24 @@ const techNames = {
   typescript: 'TypeScript',
   react: 'React',
   angular: 'Angular',
-  postgresql: 'PostgreSQL',
+  docker: 'Docker',
   mongodb: 'MongoDB',
+  postgresql: 'PostgreSQL',
 };
 
 function Information() {
   return (
     <div className="rounded-3xl bg-black/40 backdrop-blur-sm p-6 border border-white/10 flex flex-col min-h-[400px] w-full min-[831px]:w-full lg:max-w-full">
       <div className="space-y-2">
-        <h1 className="text-4xl font-bold">Hola!</h1>
-        <h2 className="text-3xl font-bold">Me llamo Esteban Rivas</h2>
+        <h1 className="text-3xl font-bold">Hola!</h1>
+        <h2 className="text-2xl font-bold">Me llamo Esteban Rivas</h2>
+        <h3 className="text-l font-bold">Ingeniero Civil en Informática | Desarrollador Full-Stack </h3>
       </div>
       <div className="flex-1 flex flex-col justify-end md:mt-8 mt-16">
         <p className="text-gray-400 sm:text-xl lg:text-base">
-          Tesista de la carrera de Ingeniería Civil en Informática de la Universidad del Bío-Bío, con experiencia en programación website desktop y mobile,
-          participando en Backend y Frontend.
+        Me especializo en crear soluciones tecnológicas completas y robustas. 
+        Mi experiencia abarca desarrollo web, desktop y mobile, con experiencia principalmente en el stack MERN. 
+        Soy entusiasta de nuevas tecnologías e IA, explorando constantemente herramientas innovadoras.    
         </p>
         <div className="flex flex-wrap gap-2 mt-8 justify-center">
           {Object.keys(icons).map((tech) => (

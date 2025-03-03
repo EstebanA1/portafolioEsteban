@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Buttons() {
+function Contact() {
   const baseUrl = import.meta.env.VITE_PUBLIC_URL || '';
 
   const handleContactClick = () => {
@@ -18,13 +18,14 @@ function Buttons() {
   return (
     <div className="flex flex-col md:flex-row gap-3 w-full min-[831px]:w-full lg:max-w-full">
       <button
-        className="flex-1 rounded-full bg-white text-black font-medium py-2 px-4 hover:bg-white/90 transition-colors"
+        className="flex-1 rounded-full bg-white text-black font-medium py-2 px-4 hover:bg-white/90 transition-transform duration-250 transform hover:scale-105"
+
         onClick={handleContactClick}
       >
         Contacto
       </button>
       <button
-        className="rounded-full bg-black/50 border border-white/10 font-medium py-2 px-4 hover:bg-black/60 transition-colors"
+        className="rounded-full bg-black/50 border border-white/10 font-medium py-2 px-4 hover:bg-black/60 transition-colors duration-250 transform hover:scale-110"
         onClick={() => window.open(`${baseUrl}/cv.pdf`, '_blank')}
       >
         CV
@@ -33,4 +34,4 @@ function Buttons() {
   );
 }
 
-export default Buttons;
+export default Contact;
