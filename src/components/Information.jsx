@@ -8,10 +8,12 @@ import angularIcon from '../assets/iconos/angular.svg';
 import postgresqlIcon from '../assets/iconos/postgresql.svg';
 import mongodbIcon from '../assets/iconos/mongodb.svg';
 import dockerIcon from '../assets/iconos/docker.svg';
+import pythonIcon from '../assets/iconos/python.svg';
 
 const icons = {
   html: htmlIcon,
   css: cssIcon,
+  python: pythonIcon,
   javascript: javascriptIcon,
   typescript: typescriptIcon,
   react: reactIcon,
@@ -24,6 +26,7 @@ const icons = {
 const techNames = {
   html: 'HTML',
   css: 'CSS',
+  python: 'Python',
   javascript: 'JavaScript',
   typescript: 'TypeScript',
   react: 'React',

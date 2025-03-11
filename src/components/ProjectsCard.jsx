@@ -51,7 +51,7 @@ export function ProjectsCard() {
       tags: ["html", "css", "javascript", "react", "python", "docker", "postgresql"],
       links: {
         github: "https://github.com/EstebanA1/miuvuu",
-        linkedin: null,
+        linkedin: "https://www.linkedin.com/posts/esteban-rivas-albornoz-2059b3183_ecommerce-fullstack-react-activity-7305317789936828417-mhR2?utm_source=share&utm_medium=member_desktop&rcm=ACoAACtlbGUB2NLtDLRab0fSm5RRihisfexTpnA",
       },
       image: imgMiuvuu
     },

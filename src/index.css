@@ -9,3 +9,9 @@
 body {
   @apply bg-background text-white min-h-screen;
 }
+
+@media (min-width: 1520px) { 
+  body {
+    overflow: hidden;
+  }
+}
