@@ -1,3 +1,9 @@
+  /* Estilos generales */
+  /* Eliminar los estilos de transición que causan problemas */
+  main {
+    position: relative;
+  }
+  
   /* Hexagonos */
   .social-card-container {
     display: flex;
@@ -75,6 +81,165 @@
     background-color: #4d4d4d;
   }
 
+  /* Efecto de cursor para texto animado */
+  .typing-cursor::after {
+    content: '|';
+    display: inline-block;
+    margin-left: 3px;
+    opacity: 1;
+    animation: blink 0.7s infinite;
+  }
+  
+  @keyframes blink {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+
+  /* Carrusel de tecnologías */
+  .tech-carousel {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    margin: 2rem 0;
+  }
+  
+  .tech-track {
+    display: flex;
+    animation: tech-scroll 20s linear infinite;
+  }
+  
+  .tech-track:hover {
+    animation-play-state: paused;
+  }
+  
+  .tech-item {
+    min-width: 80px;
+    height: 80px;
+    margin: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: perspective(500px) rotateY(10deg);
+    transition: transform 0.3s;
+  }
+  
+  .tech-item:hover {
+    transform: perspective(500px) rotateY(0);
+  }
+  
+  .tech-item img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    filter: grayscale(0.5);
+    transition: filter 0.3s, transform 0.3s;
+  }
+  
+  .tech-item:hover img {
+    filter: grayscale(0);
+    transform: scale(1.1);
+  }
+  
+  @keyframes tech-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Estilos para las bandas de tecnologías */
+  .tech-banner-container {
+    width: 100%;
+    position: relative;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .tech-banner {
+    position: relative;
+    width: 100%;
+    height: 70px;
+    margin: 0;
+    overflow: hidden;
+  }
+  
+  .tech-banner-1 {
+    background-color: #000;
+    color: white;
+    transform: skewY(-4deg) translateY(10px);
+    z-index: 2;
+  }
+  
+  .tech-banner-2 {
+    background-color: #1e1e1e;
+    color: white;
+    transform: skewY(4deg) translateY(-20px);
+    z-index: 1;
+  }
+  
+  .tech-banner-content {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    white-space: nowrap;
+    will-change: transform;
+    animation: banner-scroll 25s linear infinite;
+    width: max-content; /* El ancho se ajustará al contenido exacto */
+    backface-visibility: hidden;
+    perspective: 1000;
+    transform-style: preserve-3d;
+  }
+  
+  .tech-reverse {
+    animation: banner-scroll-reverse 25s linear infinite;
+  }
+  
+  .tech-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .tech-item-banner {
+    display: flex;
+    align-items: center;
+    margin: 0 25px;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .tech-item-banner img {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+    filter: none;
+  }
+  
+  @keyframes banner-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-100% / 6)); /* Ajustamos al nuevo número de repeticiones (1/6) */
+    }
+  }
+  
+  @keyframes banner-scroll-reverse {
+    0% {
+      transform: translateX(calc(-100% / 6)); /* Ajustamos al nuevo número de repeticiones (1/6) */
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
   @media (max-width: 1024px) {
     /* Ajustar la grilla en la cabecera */
     .grid-cols-3 {
@@ -98,5 +263,110 @@
     /* Zona de en medio | DigitalPass */
     .h-full {
       height: auto;
+    }
+
+    /* Carrusel de tecnologías */
+    .tech-item {
+      min-width: 60px;
+      height: 60px;
+      margin: 0 10px;
+    }
+    
+    .tech-item img {
+      width: 35px;
+      height: 35px;
+    }
+
+    /* Bandas de tecnologías */
+    .tech-banner {
+      height: 60px;
+      width: 100%;
+    }
+    
+    .tech-banner-1 {
+      transform: skewY(-5deg) translateY(8px);
+    }
+    
+    .tech-banner-2 {
+      transform: skewY(5deg) translateY(-16px);
+    }
+    
+    .tech-item-banner {
+      font-size: 12px;
+      margin: 0 20px;
+    }
+    
+    .tech-item-banner img {
+      height: 22px;
+      width: 22px;
+      margin-right: 8px;
+    }
+  }
+
+  /* Estilos para las notificaciones toast */
+  .toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    pointer-events: none;
+  }
+
+  .toast {
+    background-color: #ffffff;
+    color: #1a1a1a;
+    border-radius: 6px;
+    padding: 14px 16px;
+    min-width: 320px;
+    max-width: 450px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    animation: toast-in-right 0.3s ease forwards, toast-out 0.3s ease forwards 1.7s;
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.5;
+    opacity: 0.98;
+    will-change: transform, opacity;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .toast-success {
+    border-left: 3px solid #4ade80;
+  }
+
+  .toast-error {
+    border-left: 3px solid #f87171;
+  }
+
+  .toast-message {
+    flex: 1;
+  }
+
+  @keyframes toast-in-right {
+    from {
+      transform: translateX(120%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes toast-out {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(120%);
+      opacity: 0;
     }
   }

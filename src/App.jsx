@@ -1,58 +1,42 @@
 import './App.css';
-import React from 'react';
-import Contact from './components/Contact';
-import Information from './components/Information';
-import { DigitalPass } from './components/DigitalPass';
-import { LocationCard } from './components/LocationCard';
-import { ProjectsCard } from './components/ProjectsCard';
-import { SocialCard } from './components/SocialCard';
+import React, { useState } from 'react';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import TechBanner from './components/TechBanner';
+import Projects from './components/Projects';
+import SocialSection from './components/SocialSection';
+import ContactSection from './components/ContactSection';
+import Footer from './components/Footer';
+import { LanguageProvider } from './contexts/LanguageContext';
 
 function App() {
   return (
-    <div className="min-h-screen p-4">
-      <header className="gap-8">
-        {/* Versión móvil y tablet (menos de 1024px) */}
-        <div className="space-y-12 lg:hidden">
-          <Information />
-          <DigitalPass />
-          <LocationCard />
-          <div className="mb-12">
-            <ProjectsCard />
-          </div>
-          <SocialCard />
-          <div className="pb-8">
-            <Contact />
-          </div>
-        </div>
-
-        {/* Versión desktop (1024px y superior) */}
-        <div className="hidden lg:grid lg:grid-cols-3 lg:gap-8 lg:auto-rows-fr">
-          {/* Columna izquierda */}
-          <div className="flex flex-col h-full">
-            <div className="flex-grow space-y-8">
-              <Information />
-              <LocationCard />
-            </div>
-            <div className="mt-8">
-              <Contact />
-            </div>
-          </div>
-
-          {/* Columna central */}
-          <div className="flex items-start">
-            <DigitalPass />
-          </div>
-
-          {/* Columna derecha */}
-          <div className="flex flex-col h-full">
-            <div className="flex-grow space-y-8">
-              <SocialCard />
-              <ProjectsCard />
-            </div>
-          </div>
-        </div>
-      </header>
-    </div>
+    <LanguageProvider>
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 overflow-y-auto overflow-x-hidden">
+        {/* Navbar */}
+        <Navbar />
+        
+        <main className="overflow-visible">
+          {/* Hero Section */}
+          <Hero />
+          
+          {/* Tech Banner */}
+          <TechBanner />
+          
+          {/* Projects Section */}
+          <Projects />
+          
+          {/* Social Section */}
+          <SocialSection />
+          
+          {/* Contact Section */}
+          <ContactSection />
+        </main>
+        
+        {/* Footer */}
+        <Footer />
+      </div>
+    </LanguageProvider>
   );
 }
 
