@@ -1,372 +1,569 @@
-  /* Estilos generales */
-  /* Eliminar los estilos de transición que causan problemas */
-  main {
-    position: relative;
-  }
-  
-  /* Hexagonos */
-  .social-card-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  
-  .hexagon-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    margin-top: 10px;
-  }
-  
-  .hexagon {
-    width: 90px;
-    height: 90px;
-    background-color: rgba(0, 0, 0, 1);
-    clip-path: polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: transform 0.3s ease, background-color 0.3s ease;
-  }
-  
-  .hexagon:hover {
-    background-color: rgba(0, 0, 0, 1);
-    transform: scale(1.1);
-  }
-  
-  .hexagon:nth-child(2n) {
-    margin-top: 45px;
-  }
-  
-  .hexagon-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: white;
-  }
-  
-  .icon {
-    width: 24px;
-    height: 24px;
-    margin-bottom: 6px;
-  }
+/* Asegurar que el scroll siempre esté disponible */
+html, body {
+  min-height: 100vh;
+  overflow-y: auto !important;
+  scroll-behavior: smooth;
+}
 
-  /* Custom Scroll */
-  @media (min-width: 1024px) {
-    .custom-scroll {
-      margin-right: -5px ;
-    }
-  }
-  
-  .custom-scroll::-webkit-scrollbar {
-    width: 4px;
-    background-color: transparent;
-  }
-  
-  .custom-scroll::-webkit-scrollbar-track {
-    background-color: transparent;
-  }
-  
-  .custom-scroll::-webkit-scrollbar-thumb {
-    background-color: #666666;
-    border-radius: 20px;
-    background-image: none;
-  }
-  
-  .custom-scroll::-webkit-scrollbar-thumb:hover {
-    background-color: #4d4d4d;
-  }
+/* Corregir cualquier contenedor que pueda estar impidiendo el scroll */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-  /* Efecto de cursor para texto animado */
-  .typing-cursor::after {
-    content: '|';
-    display: inline-block;
-    margin-left: 3px;
+/* Estilos generales */
+main {
+  position: relative;
+  flex: 1;
+}
+
+/* Hexagonos */
+.social-card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hexagon-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.hexagon {
+  width: 90px;
+  height: 90px;
+  background-color: rgba(0, 0, 0, 1);
+  clip-path: polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.hexagon:hover {
+  background-color: rgba(0, 0, 0, 1);
+  transform: scale(1.1);
+}
+
+.hexagon:nth-child(2n) {
+  margin-top: 45px;
+}
+
+.hexagon-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 6px;
+}
+
+/* Custom Scroll */
+@media (min-width: 1024px) {
+  .custom-scroll {
+    margin-right: -5px;
+  }
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 4px;
+  background-color: transparent;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: #666666;
+  border-radius: 20px;
+  background-image: none;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: #4d4d4d;
+}
+
+/* Efecto de cursor para texto animado */
+.typing-cursor::after {
+  content: '|';
+  display: inline-block;
+  margin-left: 3px;
+  opacity: 1;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
     opacity: 1;
-    animation: blink 0.7s infinite;
   }
-  
-  @keyframes blink {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Carrusel de tecnologías */
+.tech-carousel {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  margin: 2rem 0;
+}
+
+.tech-track {
+  display: flex;
+  animation: tech-scroll 20s linear infinite;
+}
+
+.tech-track:hover {
+  animation-play-state: paused;
+}
+
+.tech-item {
+  min-width: 80px;
+  height: 80px;
+  margin: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: perspective(500px) rotateY(10deg);
+  transition: transform 0.3s;
+}
+
+.tech-item:hover {
+  transform: perspective(500px) rotateY(0);
+}
+
+.tech-item img {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+  filter: grayscale(0.5);
+  transition: filter 0.3s, transform 0.3s;
+}
+
+.tech-item:hover img {
+  filter: grayscale(0);
+  transform: scale(1.1);
+}
+
+@keyframes tech-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Estilos para las bandas de tecnologías */
+.tech-banner-container {
+  width: 100%;
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+
+.tech-banner {
+  position: relative;
+  width: 100%;
+  height: 70px;
+  margin: 0;
+  overflow: hidden;
+}
+
+.tech-banner-1 {
+  background-color: #000;
+  color: white;
+  transform: skewY(-4deg) translateY(10px);
+  z-index: 2;
+}
+
+.tech-banner-2 {
+  background-color: #1e1e1e;
+  color: white;
+  transform: skewY(4deg) translateY(-20px);
+  z-index: 1;
+}
+
+.tech-banner-content {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  white-space: nowrap;
+  will-change: transform;
+  animation: banner-scroll 25s linear infinite;
+  width: max-content; /* El ancho se ajustará al contenido exacto */
+  backface-visibility: hidden;
+  perspective: 1000;
+  transform-style: preserve-3d;
+}
+
+.tech-reverse {
+  animation: banner-scroll-reverse 25s linear infinite;
+}
+
+.tech-group {
+  display: flex;
+  align-items: center;
+}
+
+.tech-item-banner {
+  display: flex;
+  align-items: center;
+  margin: 0 25px;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tech-item-banner img {
+  height: 30px;
+  width: 30px;
+  margin-right: 10px;
+  filter: none;
+}
+
+@keyframes banner-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-100% / 6)); /* Ajustamos al nuevo número de repeticiones (1/6) */
+  }
+}
+
+@keyframes banner-scroll-reverse {
+  0% {
+    transform: translateX(calc(-100% / 6)); /* Ajustamos al nuevo número de repeticiones (1/6) */
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 1024px) {
+  /* Ajustar la grilla en la cabecera */
+  .grid-cols-3 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Zona izquierda: ajuste de tamaño en tarjetas */
+  .min-h-200 {
+    min-height: 200px;
+  }
+  .max-w-md {
+    max-width: 100%;
+  }
+
+  /* Tamaño de hexágonos */
+  .hexagon {
+    width: 60px;
+    height: 60px;
+  }
+
+  /* Zona de en medio | DigitalPass */
+  .h-full {
+    height: auto;
   }
 
   /* Carrusel de tecnologías */
-  .tech-carousel {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    margin: 2rem 0;
-  }
-  
-  .tech-track {
-    display: flex;
-    animation: tech-scroll 20s linear infinite;
-  }
-  
-  .tech-track:hover {
-    animation-play-state: paused;
-  }
-  
   .tech-item {
-    min-width: 80px;
-    height: 80px;
-    margin: 0 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: perspective(500px) rotateY(10deg);
-    transition: transform 0.3s;
-  }
-  
-  .tech-item:hover {
-    transform: perspective(500px) rotateY(0);
+    min-width: 60px;
+    height: 60px;
+    margin: 0 10px;
   }
   
   .tech-item img {
-    width: 45px;
-    height: 45px;
-    object-fit: contain;
-    filter: grayscale(0.5);
-    transition: filter 0.3s, transform 0.3s;
-  }
-  
-  .tech-item:hover img {
-    filter: grayscale(0);
-    transform: scale(1.1);
-  }
-  
-  @keyframes tech-scroll {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
+    width: 35px;
+    height: 35px;
   }
 
-  /* Estilos para las bandas de tecnologías */
-  .tech-banner-container {
-    width: 100%;
-    position: relative;
-    padding: 0;
-    margin: 0;
-  }
-  
+  /* Bandas de tecnologías */
   .tech-banner {
-    position: relative;
+    height: 60px;
     width: 100%;
-    height: 70px;
-    margin: 0;
-    overflow: hidden;
   }
   
   .tech-banner-1 {
-    background-color: #000;
-    color: white;
-    transform: skewY(-4deg) translateY(10px);
-    z-index: 2;
+    transform: skewY(-5deg) translateY(8px);
   }
   
   .tech-banner-2 {
-    background-color: #1e1e1e;
-    color: white;
-    transform: skewY(4deg) translateY(-20px);
-    z-index: 1;
-  }
-  
-  .tech-banner-content {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    white-space: nowrap;
-    will-change: transform;
-    animation: banner-scroll 25s linear infinite;
-    width: max-content; /* El ancho se ajustará al contenido exacto */
-    backface-visibility: hidden;
-    perspective: 1000;
-    transform-style: preserve-3d;
-  }
-  
-  .tech-reverse {
-    animation: banner-scroll-reverse 25s linear infinite;
-  }
-  
-  .tech-group {
-    display: flex;
-    align-items: center;
+    transform: skewY(5deg) translateY(-16px);
   }
   
   .tech-item-banner {
-    display: flex;
-    align-items: center;
-    margin: 0 25px;
-    font-size: 16px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-size: 12px;
+    margin: 0 20px;
   }
   
   .tech-item-banner img {
-    height: 30px;
-    width: 30px;
-    margin-right: 10px;
-    filter: none;
+    height: 22px;
+    width: 22px;
+    margin-right: 8px;
   }
-  
-  @keyframes banner-scroll {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(calc(-100% / 6)); /* Ajustamos al nuevo número de repeticiones (1/6) */
-    }
-  }
-  
-  @keyframes banner-scroll-reverse {
-    0% {
-      transform: translateX(calc(-100% / 6)); /* Ajustamos al nuevo número de repeticiones (1/6) */
-    }
-    100% {
-      transform: translateX(0);
-    }
-  }
+}
 
-  @media (max-width: 1024px) {
-    /* Ajustar la grilla en la cabecera */
-    .grid-cols-3 {
-      grid-template-columns: 1fr;
-    }
-  
-    /* Zona izquierda: ajuste de tamaño en tarjetas */
-    .min-h-200 {
-      min-height: 200px;
-    }
-    .max-w-md {
-      max-width: 100%;
-    }
-  
-    /* Tamaño de hexágonos */
-    .hexagon {
-      width: 60px;
-      height: 60px;
-    }
-  
-    /* Zona de en medio | DigitalPass */
-    .h-full {
-      height: auto;
-    }
+/* Estilos para las notificaciones toast */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  pointer-events: none;
+}
 
-    /* Carrusel de tecnologías */
-    .tech-item {
-      min-width: 60px;
-      height: 60px;
-      margin: 0 10px;
-    }
-    
-    .tech-item img {
-      width: 35px;
-      height: 35px;
-    }
+.toast {
+  background-color: #ffffff;
+  color: #1a1a1a;
+  border-radius: 6px;
+  padding: 14px 16px;
+  min-width: 320px;
+  max-width: 450px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  animation: toast-in-right 0.3s ease forwards, toast-out 0.3s ease forwards 1.7s;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.5;
+  opacity: 0.98;
+  will-change: transform, opacity;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
 
-    /* Bandas de tecnologías */
-    .tech-banner {
-      height: 60px;
-      width: 100%;
-    }
-    
-    .tech-banner-1 {
-      transform: skewY(-5deg) translateY(8px);
-    }
-    
-    .tech-banner-2 {
-      transform: skewY(5deg) translateY(-16px);
-    }
-    
-    .tech-item-banner {
-      font-size: 12px;
-      margin: 0 20px;
-    }
-    
-    .tech-item-banner img {
-      height: 22px;
-      width: 22px;
-      margin-right: 8px;
-    }
+.toast-success {
+  border-left: 3px solid #4ade80;
+}
+
+.toast-error {
+  border-left: 3px solid #f87171;
+}
+
+.toast-message {
+  flex: 1;
+}
+
+@keyframes toast-in-right {
+  from {
+    transform: translateX(120%);
+    opacity: 0;
   }
-
-  /* Estilos para las notificaciones toast */
-  .toast-container {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 8px;
-    pointer-events: none;
+  to {
+    transform: translateX(0);
+    opacity: 1;
   }
+}
 
-  .toast {
-    background-color: #ffffff;
-    color: #1a1a1a;
-    border-radius: 6px;
-    padding: 14px 16px;
-    min-width: 320px;
-    max-width: 450px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    animation: toast-in-right 0.3s ease forwards, toast-out 0.3s ease forwards 1.7s;
-    pointer-events: auto;
-    display: flex;
-    align-items: center;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 1.5;
-    opacity: 0.98;
-    will-change: transform, opacity;
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+@keyframes toast-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
   }
+  to {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+}
 
-  .toast-success {
-    border-left: 3px solid #4ade80;
-  }
+/* Optimizaciones de rendimiento */
+.optimize-gpu {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-  .toast-error {
-    border-left: 3px solid #f87171;
-  }
+/* Hover optimizado para tarjetas y otros elementos interactivos */
+.hover-scale {
+  transition: transform 0.2s ease;
+  will-change: transform;
+}
 
-  .toast-message {
-    flex: 1;
-  }
+.hover-scale:hover {
+  transform: scale(1.05);
+}
 
-  @keyframes toast-in-right {
-    from {
-      transform: translateX(120%);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
+.hover-translate {
+  transition: transform 0.2s ease;
+  will-change: transform;
+}
 
-  @keyframes toast-out {
-    from {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    to {
-      transform: translateX(120%);
-      opacity: 0;
-    }
-  }
+.hover-translate:hover {
+  transform: translateY(-5px);
+}
+
+/* Transiciones de color optimizadas */
+.hover-color {
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Imágenes con transición suave */
+.smooth-image {
+  transition: opacity 0.2s ease;
+  will-change: opacity;
+}
+
+.smooth-image.loaded {
+  opacity: 1;
+}
+
+.smooth-image:not(.loaded) {
+  opacity: 0;
+}
+
+/* Efectos de carrusel para las imágenes de proyectos */
+.project-carousel {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.project-carousel-inner {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.4s ease-in-out;
+}
+
+.project-carousel-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+}
+
+/* Animación de desvanecimiento para imágenes del carrusel */
+.carousel-fade-enter {
+  opacity: 0;
+  z-index: 1;
+}
+
+.carousel-fade-enter-active {
+  opacity: 1;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.carousel-fade-exit {
+  opacity: 1;
+}
+
+.carousel-fade-exit-active {
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+/* Efecto de deslizamiento para las imágenes del carrusel */
+.slide-transition {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s ease-in-out, opacity 0.4s ease;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+.slide-enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.slide-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  z-index: 2;
+}
+
+.slide-exit {
+  opacity: 1;
+  transform: translateX(0);
+  z-index: 1;
+}
+
+.slide-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+  z-index: 1;
+}
+
+/* Estilos para el contenedor del carrusel */
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-container img {
+  width: 100%;
+  height: 100%;
+}
+
+/* Los estilos para las imágenes en transición */
+.project-image-prev {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  transform: translateX(0);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+  will-change: transform, opacity;
+}
+
+.project-image-current {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+  will-change: transform, opacity;
+}
+
+.sliding-out {
+  transform: translateX(-100%) !important;
+  opacity: 0 !important;
+}
+
+.sliding-in {
+  transform: translateX(0) !important;
+  opacity: 1 !important;
+}
+
+/* Estilos object-fit */
+.object-contain {
+  object-fit: contain !important;
+}
+
+.object-cover {
+  object-fit: cover !important;
+}

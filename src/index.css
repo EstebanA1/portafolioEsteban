@@ -8,10 +8,16 @@
 
 body {
   @apply bg-background text-white min-h-screen;
+  overflow-y: auto;
 }
 
 @media (min-width: 1520px) { 
   body {
-    overflow: hidden;
+    /* Removida la propiedad overflow: hidden; que causaba problemas con el scroll */
   }
+}
+
+/* Asegurar que siempre haya scroll vertical disponible */
+html {
+  overflow-y: scroll;
 }

@@ -12,11 +12,11 @@ import { LanguageProvider } from './contexts/LanguageContext';
 function App() {
   return (
     <LanguageProvider>
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 overflow-y-auto overflow-x-hidden">
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 overflow-y-auto">
         {/* Navbar */}
         <Navbar />
         
-        <main className="overflow-visible">
+        <main className="overflow-visible min-h-[100vh]">
           {/* Hero Section */}
           <Hero />
           

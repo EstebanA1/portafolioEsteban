@@ -50,7 +50,10 @@ function ContactSection() {
         from_name: formData.name,
         from_email: formData.email,
         message: formData.message,
-        to_name: 'Esteban'
+        to_name: 'Esteban',
+        name: formData.name,
+        title: 'Nuevo mensaje del portafolio',
+        email: formData.email
       };
 
       const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_id';

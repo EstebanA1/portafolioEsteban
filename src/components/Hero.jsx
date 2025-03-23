@@ -62,11 +62,12 @@ function Hero() {
         <div className="flex flex-col-reverse md:flex-row items-start justify-between gap-12">
           {/* Texto de presentación */}
           <div className="md:w-3/4 mt-8 md:mt-4">
-            <h1 className="text-5xl font-bold mb-4">
-              {t.heroGreeting}
-            </h1>
+            <h1 
+              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight"
+              dangerouslySetInnerHTML={{ __html: t.heroGreeting }}
+            ></h1>
             <div className="h-10 my-4">
-              <span ref={typedTextRef} className="text-2xl font-bold text-green-400 inline-block"></span>
+              <span ref={typedTextRef} className="text-xl sm:text-2xl font-bold text-green-400 inline-block"></span>
             </div>
             <p className="text-xl text-gray-400 mb-8">
               {t.heroSubtitle}

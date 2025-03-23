@@ -17,7 +17,7 @@ export const translations = {
     
     // Hero Section
     heroTitle: "Desarrollador Full Stack",
-    heroGreeting: "Hola! Me llamo Esteban Rivas",
+    heroGreeting: "¡Hola! Me llamo<br />Esteban Rivas",
     heroSubtitle: "Me especializo en crear soluciones tecnológicas completas y robustas. Mi experiencia abarca desarrollo web, desktop y mobile, con experiencia principalmente en el stack MERN. Soy entusiasta de nuevas tecnologías e IA, explorando constantemente herramientas innovadoras.",
     
     // Proyectos
@@ -67,7 +67,7 @@ export const translations = {
     
     // Hero Section
     heroTitle: "Full Stack Developer",
-    heroGreeting: "Hello! My name is Esteban Rivas",
+    heroGreeting: "Hello! My name is<br />Esteban Rivas",
     heroSubtitle: "I specialize in creating comprehensive and robust technological solutions. My experience covers web, desktop, and mobile development, with a primary focus on the MERN stack. I am passionate about new technologies and AI, constantly exploring innovative tools.",
     
     // Proyectos

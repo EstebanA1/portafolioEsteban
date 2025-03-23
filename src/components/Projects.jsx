@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import imgCal from "../assets/images/app-obras-publicas/imgCal.webp";
 import imgRest from "../assets/images/app-restaurante/imgRest.webp";
 import imgTesi from "../assets/images/app-tesis/imgTesi.webp";
@@ -70,7 +70,6 @@ function Projects() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState({});
   const [hoveredProject, setHoveredProject] = useState(null);
-
   const [modalImageIndex, setModalImageIndex] = useState(0);
   
   const { t } = useLanguage();
@@ -101,22 +100,6 @@ function Projects() {
     }
   };
   
-  const nextModalImage = () => {
-    if (!selectedProject) return;
-    setModalImageIndex((prev) => (prev + 1) % selectedProject.imageGallery.length);
-  };
-  
-  const prevModalImage = () => {
-    if (!selectedProject) return;
-    setModalImageIndex((prev) => (prev === 0 ? selectedProject.imageGallery.length - 1 : prev - 1));
-  };
-  
-  useEffect(() => {
-    if (selectedProject) {
-      setModalImageIndex(0);
-    }
-  }, [selectedProject]);
-
   const projects = [
     {
       id: 1,
@@ -179,53 +162,72 @@ function Projects() {
     setCurrentImageIndex(initialIndices);
   }, []);
 
-  // Función para iniciar el carrusel de imágenes cuando el mouse está sobre un proyecto
+  const CAROUSEL_DELAY = 1000;  
+
   useEffect(() => {
-    let interval;
-    
-    if (hoveredProject !== null) {
-      interval = setInterval(() => {
-        setCurrentImageIndex(prev => {
-          const project = projects.find(p => p.id === hoveredProject);
-          if (!project) return prev;
-          
-          const nextIndex = (prev[hoveredProject] + 1) % project.imageGallery.length;
-          return { ...prev, [hoveredProject]: nextIndex };
-        });
-      }, 1500); // Cambiar imagen cada 1.5 segundos
+    if (hoveredProject) {
+      const projectId = hoveredProject;
+      const project = projects.find(p => p.id === projectId);
+      
+      if (project && project.imageGallery.length > 1) {
+        const intervalId = setInterval(() => {
+          setCurrentImageIndex(prev => ({
+            ...prev,
+            [projectId]: (prev[projectId] + 1) % project.imageGallery.length
+          }));
+        }, CAROUSEL_DELAY);
+        
+        return () => clearInterval(intervalId);
+      }
     }
-    
-    return () => clearInterval(interval);
   }, [hoveredProject, projects]);
 
-  // Manejar hover del proyecto
+  const handleModalImageChange = (direction) => {
+    if (direction === 'next') {
+      setModalImageIndex((prev) => (prev + 1) % selectedProject.imageGallery.length);
+    } else {
+      setModalImageIndex((prev) => (prev === 0 ? selectedProject.imageGallery.length - 1 : prev - 1));
+    }
+  };
+  
+  const nextModalImage = () => handleModalImageChange('next');
+  const prevModalImage = () => handleModalImageChange('prev');
+  
   const handleProjectHover = (projectId) => {
     setHoveredProject(projectId);
   };
 
-  // Manejar cuando el mouse sale del proyecto
   const handleProjectLeave = () => {
     setHoveredProject(null);
   };
 
-  // Función para abrir el modal
   const handleProjectClick = (project) => {
     setSelectedProject(project);
     setModalOpen(true);
   };
 
-  // Función para cerrar el modal
   const handleCloseModal = () => {
     setModalOpen(false);
     setSelectedProject(null);
   };
 
-  // Función para detectar clics fuera del modal
   const handleModalClick = (e) => {
     if (e.target.classList.contains("fixed")) {
       handleCloseModal();
     }
   };
+  
+  const currentImage = (project) => {
+    const index = currentImageIndex[project.id] || 0;
+    return project.imageGallery[index];
+  };
+
+  // Efecto para resetear el índice de la imagen del modal cuando se selecciona un nuevo proyecto
+  useEffect(() => {
+    if (selectedProject) {
+      setModalImageIndex(0);
+    }
+  }, [selectedProject]);
 
   return (
     <section id="proyectos" className="py-20 bg-black/10">
@@ -241,26 +243,28 @@ function Projects() {
           {projects.map((project) => (
             <div 
               key={project.id} 
-              className="bg-black/50 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden group hover:border-green-500/50 transition-all duration-300 cursor-pointer"
+              className="bg-black/50 border border-white/10 rounded-xl overflow-hidden group hover:border-green-500/50 transition-colors duration-200 cursor-pointer hover-scale optimize-gpu"
               onClick={() => handleProjectClick(project)}
               onMouseEnter={() => handleProjectHover(project.id)}
               onMouseLeave={handleProjectLeave}
             >
               {/* Carrusel de imágenes del proyecto */}
-              <div className="h-48 overflow-hidden relative">
+              <div className="h-48 overflow-hidden relative flex items-center justify-center">
+                {/* Imagen principal siempre visible */}
                 <img 
-                  src={project.imageGallery[currentImageIndex[project.id] || 0]} 
+                  src={currentImage(project)} 
                   alt={project.title}
-                  className={`w-full h-full ${getImageStyle(project.title, currentImageIndex[project.id] || 0)} transition-all duration-400 ease-in-out`}
+                  className={`w-full h-full ${getImageStyle(project.title, currentImageIndex[project.id] || 0)}`}
+                  loading="lazy"
                 />
                 
                 {/* Indicadores del carrusel */}
                 {hoveredProject === project.id && project.imageGallery.length > 1 && (
-                  <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
+                  <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1 z-10">
                     {project.imageGallery.map((_, index) => (
                       <div 
                         key={index} 
-                        className={`h-1.5 rounded-full transition-all duration-300 ${
+                        className={`h-1.5 rounded-full hover-color ${
                           index === currentImageIndex[project.id] 
                             ? 'w-4 bg-green-500' 
                             : 'w-1.5 bg-white/50'
@@ -309,12 +313,12 @@ function Projects() {
       {/* Modal de proyecto */}
       {modalOpen && selectedProject && (
         <div
-          className="fixed inset-0 flex items-center justify-center bg-black/80 p-4 z-50"
+          className="fixed inset-0 flex items-center justify-center bg-black/80 p-2 sm:p-4 z-50 overflow-y-auto"
           onClick={handleModalClick}
         >
-          <div className="bg-black/90 p-8 rounded-xl border border-white/10 text-white shadow-lg w-full max-w-2xl relative">
+          <div className="bg-black/90 p-4 sm:p-6 md:p-8 rounded-xl border border-white/10 text-white shadow-lg w-full max-w-2xl relative mx-2 my-4 sm:my-8 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
             <button
-              className="absolute top-4 right-4 text-gray-400 hover:text-white text-xl z-10"
+              className="absolute top-2 right-2 sm:top-4 sm:right-4 text-gray-400 hover:text-white text-xl z-10 transition-colors duration-200"
               onClick={handleCloseModal}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -323,11 +327,12 @@ function Projects() {
             </button>
             
             {/* Carrusel de imágenes en el modal */}
-            <div className="relative mb-6 rounded-lg overflow-hidden h-60 md:h-72">
+            <div className="relative mb-4 sm:mb-6 rounded-lg overflow-hidden h-48 sm:h-60 md:h-72 flex items-center justify-center">
+              {/* Imagen principal */}
               <img 
                 src={selectedProject.imageGallery[modalImageIndex]} 
                 alt={selectedProject.title}
-                className={`w-full h-full ${modalImageIndex === 3 && (selectedProject.title === "Miuvuu" || selectedProject.title === "Resumenes DIDE") ? "object-contain" : selectedProject.title === "Software para Restaurantes" ? "object-contain" : ""} transition-all duration-400 ease-in-out`}
+                className={`w-full h-full ${modalImageIndex === 3 && (selectedProject.title === "Miuvuu" || selectedProject.title === "Resumenes DIDE") ? "object-contain" : selectedProject.title === "Software para Restaurantes" ? "object-contain" : "object-cover"}`}
               />
               
               {/* Flechas de navegación */}
@@ -338,9 +343,9 @@ function Projects() {
                       e.stopPropagation();
                       prevModalImage();
                     }}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
+                    className="absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-1.5 sm:p-2 rounded-full transition-colors duration-200"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                     </svg>
                   </button>
@@ -349,9 +354,9 @@ function Projects() {
                       e.stopPropagation();
                       nextModalImage();
                     }}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
+                    className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-1.5 sm:p-2 rounded-full transition-colors duration-200"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </button>
@@ -360,7 +365,7 @@ function Projects() {
               
               {/* Indicadores del carrusel */}
               {selectedProject.imageGallery.length > 1 && (
-                <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
+                <div className="absolute bottom-1 sm:bottom-2 left-0 right-0 flex justify-center gap-1">
                   {selectedProject.imageGallery.map((_, index) => (
                     <button
                       key={index}
@@ -368,10 +373,10 @@ function Projects() {
                         e.stopPropagation();
                         setModalImageIndex(index);
                       }}
-                      className={`h-2 rounded-full transition-all duration-300 ${
+                      className={`h-1.5 sm:h-2 rounded-full hover-color ${
                         index === modalImageIndex 
-                          ? 'w-6 bg-green-500' 
-                          : 'w-2 bg-white/50 hover:bg-white/80'
+                          ? 'w-4 sm:w-6 bg-green-500' 
+                          : 'w-1.5 sm:w-2 bg-white/50 hover:bg-white/80'
                       }`}
                     />
                   ))}
@@ -379,32 +384,40 @@ function Projects() {
               )}
             </div>
             
-            <h3 className="text-2xl font-bold mb-4">{selectedProject.title}</h3>
-            <p className="mb-8 text-gray-300">{selectedProject.description}</p>
+            <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">{selectedProject.title}</h3>
+            <p className="text-sm sm:text-base mb-4 sm:mb-6 text-gray-300">{
+              selectedProject.id === 1 
+                ? t.miuvuuDesc 
+                : selectedProject.id === 2 
+                  ? t.restauranteDesc 
+                  : selectedProject.id === 3
+                    ? t.citasDesc
+                    : t.tesisDesc
+            }</p>
             
-            <div className="flex flex-wrap gap-2 mb-8">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6">
               {selectedProject.technologies.map((tech, index) => (
                 <span 
                   key={index}
-                  className="px-3 py-1 bg-black/70 text-sm rounded-full border border-white/10 flex items-center gap-2"
+                  className="px-2 sm:px-3 py-1 bg-black/70 text-xs sm:text-sm rounded-full border border-white/10 flex items-center gap-1.5 sm:gap-2"
                 >
                   <img
                     src={icons[tech]}
                     alt={`${techNames[tech]} icon`}
-                    className="w-4 h-4"
+                    className="w-3 h-3 sm:w-4 sm:h-4"
                   />
                   {techNames[tech]}
                 </span>
               ))}
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col gap-2 sm:gap-4 justify-center">
               {selectedProject.links.demo && (
                 <a
                   href={selectedProject.links.demo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 px-6 py-3 bg-purple-600 text-white rounded-full font-bold hover:bg-purple-500 hover:scale-110 transition-all duration-300 flex items-center justify-center"
+                  className="w-full px-4 sm:px-6 py-2 sm:py-3 bg-purple-600 text-white rounded-full font-bold hover:bg-purple-500 hover-scale flex items-center justify-center text-sm sm:text-base"
                 >
                   {t.verSitioWeb}
                 </a>
@@ -413,7 +426,7 @@ function Projects() {
                 href={selectedProject.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 px-6 py-3 bg-green-500 text-black rounded-full font-bold hover:bg-green-400 hover:scale-110 transition-all duration-300 flex items-center justify-center"
+                className="w-full px-4 sm:px-6 py-2 sm:py-3 bg-green-500 text-black rounded-full font-bold hover:bg-green-400 hover-scale flex items-center justify-center text-sm sm:text-base"
               >
                 {t.verGithub}
               </a>
@@ -422,13 +435,13 @@ function Projects() {
                   href={selectedProject.links.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 px-6 py-3 bg-transparent border border-white/50 rounded-full font-bold hover:border-white hover:scale-110 transition-all duration-300 flex items-center justify-center"
+                  className="w-full px-4 sm:px-6 py-2 sm:py-3 bg-transparent border border-white/50 rounded-full font-bold hover:border-white hover-scale flex items-center justify-center text-sm sm:text-base"
                 >
                   {t.verLinkedin}
                 </a>
               ) : (
                 <button
-                  className="flex-1 px-6 py-3 bg-transparent border border-gray-500 text-gray-500 rounded-full font-bold cursor-not-allowed flex items-center justify-center"
+                  className="w-full px-4 sm:px-6 py-2 sm:py-3 bg-transparent border border-gray-500 text-gray-500 rounded-full font-bold cursor-not-allowed flex items-center justify-center text-sm sm:text-base"
                   disabled
                 >
                   {t.pendiente}
