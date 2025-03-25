@@ -567,3 +567,10 @@ main {
 .object-cover {
   object-fit: cover !important;
 }
+
+/* Optimizaciones para LCP */
+.profile-image {
+  content-visibility: auto;
+  contain-intrinsic-size: 320px 320px;
+  will-change: transform, opacity;
+}

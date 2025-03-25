@@ -44,6 +44,8 @@ export const translations = {
     enviandoBtn: "Enviando...",
     mensajeExito: "¡Mensaje enviado correctamente!",
     mensajeError: "Error al enviar el mensaje. Inténtelo de nuevo.",
+    camposRequeridos: "Por favor, complete todos los campos requeridos.",
+    emailInvalido: "Por favor, ingrese un correo electrónico válido.",
 
     // Redes Sociales
     redesTitle: "Redes Sociales",
@@ -94,6 +96,8 @@ export const translations = {
     enviandoBtn: "Sending...",
     mensajeExito: "Message sent successfully!",
     mensajeError: "Error sending message. Please try again.",
+    camposRequeridos: "Please fill in all required fields.",
+    emailInvalido: "Please enter a valid email address.",
 
     // Redes Sociales
     redesTitle: "Social Networks",

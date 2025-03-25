@@ -40,8 +40,35 @@ function ContactSection() {
     }));
   };
 
+  const showToast = (message, type) => {
+    setToast({
+      visible: true,
+      message: message,
+      type: type
+    });
+    
+    // Ocultar toast después de 3 segundos
+    setTimeout(() => {
+      setToast(prev => ({ ...prev, visible: false }));
+    }, 3000);
+  };
+
   const handleContactSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validar que todos los campos requeridos estén completos
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      showToast(t.camposRequeridos, 'error');
+      return; // Detener el envío del formulario
+    }
+    
+    // Validar formato de email básico
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email.trim())) {
+      showToast(t.emailInvalido, 'error');
+      return;
+    }
+    
     setStatus(prevStatus => ({ ...prevStatus, submitting: true }));
 
     try {
@@ -68,11 +95,7 @@ function ContactSection() {
       });
       
       // Mostrar toast de éxito
-      setToast({
-        visible: true,
-        message: t.mensajeExito,
-        type: 'success'
-      });
+      showToast(t.mensajeExito, 'success');
       
       // Limpiar formulario
       setFormData({
@@ -82,11 +105,6 @@ function ContactSection() {
         message: ''
       });
       
-      // Ocultar toast después de 3 segundos
-      setTimeout(() => {
-        setToast(prev => ({ ...prev, visible: false }));
-      }, 3000);
-      
     } catch (error) {
       setStatus({
         submitted: false,
@@ -95,16 +113,7 @@ function ContactSection() {
       });
       
       // Mostrar toast de error
-      setToast({
-        visible: true,
-        message: t.mensajeError,
-        type: 'error'
-      });
-      
-      // Ocultar toast después de 3 segundos
-      setTimeout(() => {
-        setToast(prev => ({ ...prev, visible: false }));
-      }, 3000);
+      showToast(t.mensajeError, 'error');
     }
   };
 
@@ -130,7 +139,6 @@ function ContactSection() {
               id="name"
               name="name"
               className="w-full px-4 py-3 bg-black/50 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
-              required
               value={formData.name}
               onChange={handleChange}
             />
@@ -145,7 +153,6 @@ function ContactSection() {
               id="email"
               name="email"
               className="w-full px-4 py-3 bg-black/50 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
-              required
               value={formData.email}
               onChange={handleChange}
             />
@@ -160,7 +167,6 @@ function ContactSection() {
               name="message"
               rows="5"
               className="w-full px-4 py-3 bg-black/50 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all resize-none"
-              required
               value={formData.message}
               onChange={handleChange}
             ></textarea>

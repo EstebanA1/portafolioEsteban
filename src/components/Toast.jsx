@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 
-const Toast = ({ message, type = 'success', onClose, duration = 2000 }) => {
+const Toast = ({ message, type = 'success', onClose, duration = 3000 }) => {
   useEffect(() => {
-    const timer = setTimeout(() => {
-      onClose();
-    }, duration);
-
-    return () => clearTimeout(timer);
+    // Solo intentar limpiar el temporizador si hay un callback onClose
+    if (onClose) {
+      const timer = setTimeout(() => {
+        onClose();
+      }, duration);
+      
+      return () => clearTimeout(timer);
+    }
   }, [duration, onClose]);
 
   const renderIcon = () => {

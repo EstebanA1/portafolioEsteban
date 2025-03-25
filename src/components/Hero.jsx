@@ -101,7 +101,11 @@ function Hero() {
                 <img
                   src={profileImage}
                   alt="Esteban Rivas"
-                  className="w-full h-full object-cover"
+                  width={320}
+                  height={320}
+                  className="w-full h-full object-cover profile-image"
+                  loading="eager"
+                  fetchpriority="high"
                 />
               </div>
             </div>
