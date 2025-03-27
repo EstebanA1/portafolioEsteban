@@ -2,8 +2,11 @@ import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 function SocialSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const baseUrl = import.meta.env.VITE_PUBLIC_URL || '';
+  
+  // Determinar qué CV descargar según el idioma
+  const cvFile = language === 'en' ? 'cv-en.pdf' : 'cv.pdf';
   
   return (
     <section id="redes" className="py-20 bg-black/20">
@@ -64,7 +67,7 @@ function SocialSection() {
           <h3 className="text-2xl font-bold mb-4">{t.cvTitle}</h3>
           <p className="text-gray-400 mb-6">{t.cvDesc}</p>
           <a
-            href={`${baseUrl}/cv.pdf`}
+            href={`${baseUrl}/${cvFile}`}
             target="_blank"
             rel="noopener noreferrer"
             className="px-8 py-3 bg-green-500 text-black rounded-full font-bold hover:bg-green-400 hover-scale flex items-center justify-center optimize-gpu"

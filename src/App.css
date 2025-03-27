@@ -1,24 +1,25 @@
-/* Asegurar que el scroll siempre esté disponible */
 html, body {
   min-height: 100vh;
   overflow-y: auto !important;
   scroll-behavior: smooth;
+  scroll-padding-top: 10px;
 }
 
-/* Corregir cualquier contenedor que pueda estar impidiendo el scroll */
 #root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Estilos generales */
 main {
   position: relative;
   flex: 1;
 }
 
-/* Hexagonos */
+section[id] {
+  scroll-margin-top: 10px;
+}
+
 .social-card-container {
   display: flex;
   flex-direction: column;
@@ -69,7 +70,6 @@ main {
   margin-bottom: 6px;
 }
 
-/* Custom Scroll */
 @media (min-width: 1024px) {
   .custom-scroll {
     margin-right: -5px;
@@ -95,7 +95,6 @@ main {
   background-color: #4d4d4d;
 }
 
-/* Efecto de cursor para texto animado */
 .typing-cursor::after {
   content: '|';
   display: inline-block;
@@ -113,7 +112,6 @@ main {
   }
 }
 
-/* Carrusel de tecnologías */
 .tech-carousel {
   width: 100%;
   overflow: hidden;
@@ -167,7 +165,6 @@ main {
   }
 }
 
-/* Estilos para las bandas de tecnologías */
 .tech-banner-container {
   width: 100%;
   position: relative;
@@ -255,12 +252,10 @@ main {
 }
 
 @media (max-width: 1024px) {
-  /* Ajustar la grilla en la cabecera */
   .grid-cols-3 {
     grid-template-columns: 1fr;
   }
 
-  /* Zona izquierda: ajuste de tamaño en tarjetas */
   .min-h-200 {
     min-height: 200px;
   }
@@ -268,18 +263,15 @@ main {
     max-width: 100%;
   }
 
-  /* Tamaño de hexágonos */
   .hexagon {
     width: 60px;
     height: 60px;
   }
 
-  /* Zona de en medio | DigitalPass */
   .h-full {
     height: auto;
   }
 
-  /* Carrusel de tecnologías */
   .tech-item {
     min-width: 60px;
     height: 60px;
@@ -291,7 +283,6 @@ main {
     height: 35px;
   }
 
-  /* Bandas de tecnologías */
   .tech-banner {
     height: 60px;
     width: 100%;
@@ -317,7 +308,6 @@ main {
   }
 }
 
-/* Estilos para las notificaciones toast */
 .toast-container {
   position: fixed;
   bottom: 24px;
@@ -385,7 +375,6 @@ main {
   }
 }
 
-/* Optimizaciones de rendimiento */
 .optimize-gpu {
   will-change: transform, opacity;
   transform: translateZ(0);
@@ -394,7 +383,6 @@ main {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Hover optimizado para tarjetas y otros elementos interactivos */
 .hover-scale {
   transition: transform 0.2s ease;
   will-change: transform;
@@ -413,12 +401,10 @@ main {
   transform: translateY(-5px);
 }
 
-/* Transiciones de color optimizadas */
 .hover-color {
   transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
 
-/* Imágenes con transición suave */
 .smooth-image {
   transition: opacity 0.2s ease;
   will-change: opacity;
@@ -432,7 +418,6 @@ main {
   opacity: 0;
 }
 
-/* Efectos de carrusel para las imágenes de proyectos */
 .project-carousel {
   position: relative;
   overflow: hidden;
@@ -454,7 +439,6 @@ main {
   height: 100%;
 }
 
-/* Animación de desvanecimiento para imágenes del carrusel */
 .carousel-fade-enter {
   opacity: 0;
   z-index: 1;
@@ -474,7 +458,6 @@ main {
   transition: opacity 0.4s ease-in-out;
 }
 
-/* Efecto de deslizamiento para las imágenes del carrusel */
 .slide-transition {
   position: absolute;
   top: 0;
@@ -509,7 +492,6 @@ main {
   z-index: 1;
 }
 
-/* Estilos para el contenedor del carrusel */
 .carousel-container {
   position: relative;
   overflow: hidden;
@@ -522,7 +504,6 @@ main {
   height: 100%;
 }
 
-/* Los estilos para las imágenes en transición */
 .project-image-prev {
   position: absolute;
   top: 0;
@@ -559,7 +540,6 @@ main {
   opacity: 1 !important;
 }
 
-/* Estilos object-fit */
 .object-contain {
   object-fit: contain !important;
 }
@@ -568,7 +548,6 @@ main {
   object-fit: cover !important;
 }
 
-/* Optimizaciones para LCP */
 .profile-image {
   content-visibility: auto;
   contain-intrinsic-size: 320px 320px;
