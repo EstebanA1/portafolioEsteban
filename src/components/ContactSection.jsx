@@ -40,17 +40,15 @@ function ContactSection() {
     }));
   };
 
-  const showToast = (message, type) => {
-    setToast({
-      visible: true,
-      message: message,
-      type: type
-    });
-    
-    // Ocultar toast después de 3 segundos
-    setTimeout(() => {
-      setToast(prev => ({ ...prev, visible: false }));
-    }, 3000);
+  const validateEmail = (email) => {
+    // Validar que el email no esté vacío
+    if (!email.trim()) {
+      return false;
+    }
+
+    // Validar formato básico de email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email.trim());
   };
 
   const handleContactSubmit = async (e) => {
@@ -62,9 +60,8 @@ function ContactSection() {
       return; // Detener el envío del formulario
     }
     
-    // Validar formato de email básico
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email.trim())) {
+    // Validar formato de email
+    if (!validateEmail(formData.email)) {
       showToast(t.emailInvalido, 'error');
       return;
     }
@@ -117,6 +114,19 @@ function ContactSection() {
     }
   };
 
+  const showToast = (message, type) => {
+    setToast({
+      visible: true,
+      message: message,
+      type: type
+    });
+    
+    // Ocultar toast después de 3 segundos
+    setTimeout(() => {
+      setToast(prev => ({ ...prev, visible: false }));
+    }, 3000);
+  };
+
   const baseUrl = import.meta.env.VITE_PUBLIC_URL || '';
   
   return (
@@ -129,7 +139,7 @@ function ContactSection() {
           </p>
         </div>
         
-        <form className="w-full mx-auto" onSubmit={handleContactSubmit}>
+        <form className="w-full mx-auto" onSubmit={handleContactSubmit} noValidate>
           <div className="mb-6">
             <label htmlFor="name" className="block text-sm font-medium mb-2">
               {t.nombreLabel}
@@ -141,6 +151,7 @@ function ContactSection() {
               className="w-full px-4 py-3 bg-black/50 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
               value={formData.name}
               onChange={handleChange}
+              required
             />
           </div>
           
@@ -155,6 +166,7 @@ function ContactSection() {
               className="w-full px-4 py-3 bg-black/50 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
               value={formData.email}
               onChange={handleChange}
+              required
             />
           </div>
           
@@ -169,6 +181,7 @@ function ContactSection() {
               className="w-full px-4 py-3 bg-black/50 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all resize-none"
               value={formData.message}
               onChange={handleChange}
+              required
             ></textarea>
           </div>
           
