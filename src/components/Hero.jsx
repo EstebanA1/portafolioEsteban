@@ -95,18 +95,22 @@ function Hero() {
             <div className="relative w-64 h-64 md:w-80 md:h-80 md:-mt-4">
               {/* Efecto de fondo */}
               <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 via-blue-500/20 to-purple-500/20 rounded-full blur-xl"></div>
-              {/* Borde de la imagen */}
+              {/* Borde y contenedor de la imagen */}
               <div className="absolute inset-2 rounded-full border-2 border-green-500/50 overflow-hidden">
-                {/* Imagen */}
-                <img
-                  src={profileImage}
-                  alt="Esteban Rivas"
-                  width={320}
-                  height={320}
-                  className="w-full h-full object-cover profile-image"
-                  loading="eager"
-                  fetchpriority="high"
-                />
+                {/* Contenedor para controlar la escala y posición */}
+                <div className="w-full h-full">
+                  <img
+                    src={profileImage}
+                    alt="Esteban Rivas"
+                    className="w-full h-full object-cover"
+                    style={{ 
+                      objectPosition: '10% 50%', 
+                      transform: 'scale(1.1)',
+                    }}
+                    loading="eager"
+                    fetchpriority="high"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -116,4 +120,4 @@ function Hero() {
   );
 }
 
-export default Hero; 
+export default Hero;
