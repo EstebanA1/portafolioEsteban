@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import Toast from './Toast';
 import { useLanguage } from '../contexts/LanguageContext';
 
 function ContactSection() {
   const { t } = useLanguage();
+  // Bandera para prevenir múltiples envíos simultáneos
+  const isSubmittingRef = useRef(false);
 
   useEffect(() => {
     // Inicializar EmailJS con tu clave pública
@@ -18,13 +20,13 @@ function ContactSection() {
     subject: '',
     message: ''
   });
-  
+
   const [status, setStatus] = useState({
     submitted: false,
     submitting: false,
     info: { error: false, msg: null }
   });
-  
+
   // Estado para controlar la visibilidad del toast
   const [toast, setToast] = useState({
     visible: false,
@@ -41,31 +43,33 @@ function ContactSection() {
   };
 
   const validateEmail = (email) => {
-    // Validar que el email no esté vacío
-    if (!email.trim()) {
-      return false;
-    }
-
-    // Validar formato básico de email
+    if (!email.trim()) return false;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email.trim());
   };
 
   const handleContactSubmit = async (e) => {
     e.preventDefault();
-    
-    // Validar que todos los campos requeridos estén completos
+
+    if (isSubmittingRef.current || toast.visible) return;
+    isSubmittingRef.current = true;
+
+    if (document.activeElement) document.activeElement.blur();
+
+    // Validar campos requeridos
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
       showToast(t.camposRequeridos, 'error');
-      return; // Detener el envío del formulario
+      isSubmittingRef.current = false;
+      return;
     }
-    
+
     // Validar formato de email
     if (!validateEmail(formData.email)) {
       showToast(t.emailInvalido, 'error');
+      isSubmittingRef.current = false;
       return;
     }
-    
+
     setStatus(prevStatus => ({ ...prevStatus, submitting: true }));
 
     try {
@@ -82,53 +86,77 @@ function ContactSection() {
 
       const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_id';
       const templateID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_id';
-      
+
       await emailjs.send(serviceID, templateID, templateParams);
-      
+
       setStatus({
         submitted: true,
         submitting: false,
         info: { error: false, msg: t.mensajeExito }
       });
-      
+
       // Mostrar toast de éxito
       showToast(t.mensajeExito, 'success');
-      
-      // Limpiar formulario
+
       setFormData({
         name: '',
         email: '',
         subject: '',
         message: ''
       });
-      
+
     } catch (error) {
       setStatus({
         submitted: false,
         submitting: false,
         info: { error: true, msg: t.mensajeError }
       });
-      
+
       // Mostrar toast de error
       showToast(t.mensajeError, 'error');
+    } finally {
+      isSubmittingRef.current = false;
     }
   };
 
+  // Contador para keys únicas
+  const toastCounterRef = useRef(0);
+
   const showToast = (message, type) => {
-    setToast({
-      visible: true,
-      message: message,
-      type: type
-    });
+    // Generar un nuevo ID único para la key del toast
+    const newId = ++toastCounterRef.current;
     
-    // Ocultar toast después de 3 segundos
-    setTimeout(() => {
+    // Si ya hay un toast visible, primero quitar el existente
+    if (toast.visible) {
       setToast(prev => ({ ...prev, visible: false }));
-    }, 3000);
+      // Pequeño retraso antes de mostrar el nuevo toast
+      setTimeout(() => {
+        setToast({
+          visible: true,
+          message,
+          type,
+          id: newId
+        });
+      }, 100);
+    } else {
+      setToast({
+        visible: true,
+        message,
+        type,
+        id: newId
+      });
+    }
   };
 
-  const baseUrl = import.meta.env.VITE_PUBLIC_URL || '';
-  
+  const handleToastClose = () => {
+    setToast(prev => ({ ...prev, visible: false }));
+    // Cuando se cierra el toast, permitir nuevos envíos
+    isSubmittingRef.current = false;
+  };
+
+  // Función para determinar si el botón debe estar deshabilitado
+  const isButtonDisabled = status.submitting || toast.visible;
+
   return (
     <section id="contacto" className="py-20 bg-black/20 ">
       <div className="container mx-auto px-4 max-w-4xl">
@@ -138,7 +166,7 @@ function ContactSection() {
             {t.contactoSubtitle}
           </p>
         </div>
-        
+
         <form className="w-full mx-auto" onSubmit={handleContactSubmit} noValidate>
           <div className="mb-6">
             <label htmlFor="name" className="block text-sm font-medium mb-2">
@@ -154,7 +182,7 @@ function ContactSection() {
               required
             />
           </div>
-          
+
           <div className="mb-6">
             <label htmlFor="email" className="block text-sm font-medium mb-2">
               {t.emailLabel}
@@ -169,7 +197,7 @@ function ContactSection() {
               required
             />
           </div>
-          
+
           <div className="mb-6">
             <label htmlFor="message" className="block text-sm font-medium mb-2">
               {t.mensajeLabel}
@@ -184,12 +212,16 @@ function ContactSection() {
               required
             ></textarea>
           </div>
-          
+
           <div className="text-center">
             <button
               type="submit"
-              className="px-8 py-3 bg-green-500 text-black rounded-full font-bold hover:bg-green-400 transition-colors"
-              disabled={status.submitting}
+              className={`px-8 py-3 rounded-full font-bold transition-all duration-300 ${
+                isButtonDisabled 
+                  ? 'bg-green-500/50 text-black/70 cursor-not-allowed hover:bg-green-500/50' 
+                  : 'bg-green-500 text-black hover:bg-green-400'
+              }`}
+              disabled={isButtonDisabled}
             >
               {status.submitting ? t.enviandoBtn : t.enviarBtn}
             </button>
@@ -197,10 +229,15 @@ function ContactSection() {
         </form>
       </div>
       {toast.visible && (
-        <Toast message={toast.message} type={toast.type} />
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={handleToastClose}
+          key={`toast-${toast.id || Date.now()}`}
+        />
       )}
     </section>
   );
 }
 
-export default ContactSection; 
+export default ContactSection;

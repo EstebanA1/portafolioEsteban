@@ -6,9 +6,8 @@ function Hero() {
   const { t, language } = useLanguage();
   const typedTextRef = useRef(null);
   
-  useEffect(() => {
-    // Textos a escribir (siempre los mismos independientemente del idioma)
-    const texts = ["Full Stack Developer", "Ingeniero Civil en Informática"];
+  useEffect(() => { // Para ver el efecto de escritura al cambiar el idioma
+    const texts = ["Full Stack Developer", "Ingeniero Civil en Informática"]; // No cambian
     
     let textIndex = 0;
     let charIndex = 0;
@@ -52,9 +51,8 @@ function Hero() {
     typeEffect();
     
     return () => {
-      // Limpiar timeouts si es necesario
     };
-  }, []); // Eliminar language como dependencia
+  }, []); 
   
   return (
     <section id="inicio" className="pt-28 pb-20">

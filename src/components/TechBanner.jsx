@@ -46,7 +46,7 @@ function TechBanner() {
     // Crear múltiples repeticiones para asegurar que haya suficientes elementos
     // y no queden espacios vacíos con cualquier tamaño de pantalla
     const sets = [];
-    const numRepetitions = 6; // Aumentamos el número de repeticiones para cubrir todo el espacio
+    const numRepetitions = 6;
     
     for (let i = 0; i < numRepetitions; i++) {
       sets.push(...createSet(`tech-set-${i}`));
@@ -57,14 +57,14 @@ function TechBanner() {
 
   return (
     <div className="tech-banner-container py-8 overflow-hidden">
-      {/* Primera banda - Frontend */}
+      {/* Primera banda */}
       <div className="tech-banner tech-banner-1">
         <div className="tech-banner-content">
           {renderTechItems(frontendTech)}
         </div>
       </div>
       
-      {/* Segunda banda - Backend */}
+      {/* Segunda banda */}
       <div className="tech-banner tech-banner-2">
         <div className="tech-banner-content tech-reverse">
           {renderTechItems(backendTech)}

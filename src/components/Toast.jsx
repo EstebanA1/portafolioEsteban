@@ -1,16 +1,40 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
+// Componente Toast
 const Toast = ({ message, type = 'success', onClose, duration = 3000 }) => {
-  useEffect(() => {
-    // Solo intentar limpiar el temporizador si hay un callback onClose
-    if (onClose) {
-      const timer = setTimeout(() => {
-        onClose();
-      }, duration);
+  const toastRef = useRef(null);
+  const timeoutRef = useRef(null);
+
+  // Función para manejar la animación de salida
+  const closeToast = () => {
+    if (toastRef.current) {
+      toastRef.current.style.animation = 'toast-out 0.3s ease forwards';
       
-      return () => clearTimeout(timer);
+      // Esperar a que termine la animación antes de ejecutar onClose
+      setTimeout(() => {
+        if (onClose) onClose();
+      }, 300);
     }
-  }, [duration, onClose]);
+  };
+
+  useEffect(() => {
+    // Al montar, configurar la animación de entrada
+    if (toastRef.current) {
+      toastRef.current.style.animation = 'toast-in-right 0.3s ease forwards';
+      
+      // Configurar el timeout para cerrar automáticamente
+      timeoutRef.current = setTimeout(() => {
+        closeToast();
+      }, duration);
+    }
+    
+    // Limpiar timeout al desmontar
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [duration]);
 
   const renderIcon = () => {
     if (type === 'success') {
@@ -31,7 +55,11 @@ const Toast = ({ message, type = 'success', onClose, duration = 3000 }) => {
 
   return (
     <div className="toast-container">
-      <div className={`toast toast-${type}`}>
+      <div
+        ref={toastRef}
+        className={`toast toast-${type}`}
+        style={{ animation: 'none' }}
+      >
         {renderIcon()}
         <div className="toast-message">{message}</div>
       </div>
@@ -39,4 +67,4 @@ const Toast = ({ message, type = 'success', onClose, duration = 3000 }) => {
   );
 };
 
-export default Toast; 
+export default Toast;
