@@ -3,6 +3,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import imgCal from "../assets/images/app-obras-publicas/imgCal.webp";
 import imgCal2 from "../assets/images/app-obras-publicas/imgCal2.webp";
 import imgCal3 from "../assets/images/app-obras-publicas/imgCal3.webp";
+import imgCal4 from "../assets/images/app-obras-publicas/imgCal4.webp";
+import imgCal5 from "../assets/images/app-obras-publicas/imgCal5.webp";
+import imgCal6 from "../assets/images/app-obras-publicas/imgCal6.webp";
 
 import imgRest from "../assets/images/app-restaurante/imgRest.webp";
 import imgRest2 from "../assets/images/app-restaurante/imgRest2.webp";
@@ -131,7 +134,7 @@ function Projects() {
       title: "Sistema de gestión de citas",
       description: "Sistema para permisos de edificación, obras y regularización",
       image: imgCal,
-      imageGallery: [imgCal, imgCal2, imgCal3],
+      imageGallery: [imgCal, imgCal2, imgCal3, imgCal4, imgCal5, imgCal6],
       technologies: ["html", "css", "javascript", "react", "mongodb", "node", "express"],
       links: {
         github: "https://github.com/EstebanA1/proyectoISW",
@@ -162,7 +165,7 @@ function Projects() {
     setCurrentImageIndex(initialIndices);
   }, []);
 
-  const CAROUSEL_DELAY = 1000;  
+  const CAROUSEL_DELAY = 2000;
 
   useEffect(() => {
     if (hoveredProject) {
@@ -248,27 +251,37 @@ function Projects() {
               onMouseEnter={() => handleProjectHover(project.id)}
               onMouseLeave={handleProjectLeave}
             >
-              {/* Carrusel de imágenes del proyecto */}
-              <div className="h-48 overflow-hidden relative flex items-center justify-center">
-                {/* Imagen principal siempre visible */}
-                <img 
-                  src={currentImage(project)} 
-                  alt={project.title}
-                  className={`w-full h-full ${getImageStyle(project.title, currentImageIndex[project.id] || 0)}`}
-                  loading="lazy"
-                />
+              {/* Carrusel de imágenes del proyecto con transición suave */}
+              <div className="h-48 overflow-hidden relative">
+                <div className="project-image-container">
+                  {/* Renderizar todas las imágenes con posición absoluta */}
+                  {project.imageGallery.map((image, idx) => (
+                    <img
+                      key={`${project.id}-${idx}`}
+                      src={image}
+                      alt={`${project.title} - Imagen ${idx + 1}`}
+                      className={`project-carousel-image ${idx === (currentImageIndex[project.id] || 0) ? 'active' : ''} ${getImageStyle(project.title, idx)}`}
+                      loading="lazy"
+                    />
+                  ))}
+                </div>
                 
-                {/* Indicadores del carrusel */}
-                {hoveredProject === project.id && project.imageGallery.length > 1 && (
-                  <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1 z-10">
+                {/* Indicadores del carrusel con fondo */}
+                {project.imageGallery.length > 1 && (
+                  <div className={`project-carousel-indicators ${hoveredProject === project.id ? 'visible' : ''}`}>
                     {project.imageGallery.map((_, index) => (
                       <div 
                         key={index} 
-                        className={`h-1.5 rounded-full hover-color ${
-                          index === currentImageIndex[project.id] 
-                            ? 'w-4 bg-green-500' 
-                            : 'w-1.5 bg-white/50'
+                        className={`project-carousel-indicator ${
+                          index === (currentImageIndex[project.id] || 0) ? 'active' : ''
                         }`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentImageIndex(prev => ({
+                            ...prev,
+                            [project.id]: index
+                          }));
+                        }}
                       />
                     ))}
                   </div>
@@ -326,14 +339,19 @@ function Projects() {
               </svg>
             </button>
             
-            {/* Carrusel de imágenes en el modal */}
-            <div className="relative mb-4 sm:mb-6 rounded-lg overflow-hidden h-48 sm:h-60 md:h-72 flex items-center justify-center">
-              {/* Imagen principal */}
-              <img 
-                src={selectedProject.imageGallery[modalImageIndex]} 
-                alt={selectedProject.title}
-                className={`w-full h-full ${modalImageIndex === 3 && (selectedProject.title === "Miuvuu" || selectedProject.title === "Resumenes DIDE") ? "object-contain" : selectedProject.title === "Software para Restaurantes" ? "object-contain" : "object-cover"}`}
-              />
+            {/* Carrusel de imágenes en el modal con transición suave */}
+            <div className="relative mb-4 sm:mb-6 rounded-lg overflow-hidden h-48 sm:h-60 md:h-72">
+              <div className="project-image-container">
+                {/* Renderizar todas las imágenes con posición absoluta */}
+                {selectedProject.imageGallery.map((image, idx) => (
+                  <img
+                    key={`modal-${selectedProject.id}-${idx}`}
+                    src={image}
+                    alt={`${selectedProject.title} - Imagen ${idx + 1}`}
+                    className={`project-carousel-image ${idx === modalImageIndex ? 'active' : ''} ${modalImageIndex === 3 && (selectedProject.title === "Miuvuu" || selectedProject.title === "Resumenes DIDE") ? "object-contain" : selectedProject.title === "Software para Restaurantes" ? "object-contain" : "object-cover"}`}
+                  />
+                ))}
+              </div>
               
               {/* Flechas de navegación */}
               {selectedProject.imageGallery.length > 1 && (
@@ -363,20 +381,18 @@ function Projects() {
                 </>
               )}
               
-              {/* Indicadores del carrusel */}
+              {/* Indicadores del carrusel mejorados */}
               {selectedProject.imageGallery.length > 1 && (
-                <div className="absolute bottom-1 sm:bottom-2 left-0 right-0 flex justify-center gap-1">
+                <div className="project-carousel-indicators visible">
                   {selectedProject.imageGallery.map((_, index) => (
-                    <button
-                      key={index}
+                    <div
+                      key={`modal-indicator-${index}`}
                       onClick={(e) => {
                         e.stopPropagation();
                         setModalImageIndex(index);
                       }}
-                      className={`h-1.5 sm:h-2 rounded-full hover-color ${
-                        index === modalImageIndex 
-                          ? 'w-4 sm:w-6 bg-green-500' 
-                          : 'w-1.5 sm:w-2 bg-white/50 hover:bg-white/80'
+                      className={`project-carousel-indicator ${
+                        index === modalImageIndex ? 'active' : ''
                       }`}
                     />
                   ))}
@@ -455,4 +471,4 @@ function Projects() {
   );
 }
 
-export default Projects; 
+export default Projects;
