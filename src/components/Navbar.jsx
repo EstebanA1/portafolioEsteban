@@ -66,6 +66,8 @@ function Navbar() {
         <button 
           className="md:hidden text-white"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label={isMenuOpen ? t.cerrarMenu || "Cerrar menú" : t.abrirMenu || "Abrir menú"}
+          aria-expanded={isMenuOpen}
         >
           {isMenuOpen ? (
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -138,4 +140,4 @@ function Navbar() {
   );
 }
 
-export default Navbar; 
+export default Navbar;

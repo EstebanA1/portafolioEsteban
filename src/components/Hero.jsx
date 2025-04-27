@@ -89,8 +89,8 @@ function Hero() {
           </div>
           
           {/* Imagen de perfil */}
-          <div className="md:w-2/5 flex justify-center md:justify-end">
-            <div className="relative w-64 h-64 md:w-80 md:h-80 md:-mt-4">
+          <div className="w-full flex justify-center md:w-2/5 md:justify-end profile-container">
+            <div className="relative w-64 h-64 md:w-80 md:h-80 md:-mt-4 profile-image-wrapper">
               {/* Efecto de fondo */}
               <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 via-blue-500/20 to-purple-500/20 rounded-full blur-xl"></div>
               {/* Borde y contenedor de la imagen */}
@@ -100,7 +100,7 @@ function Hero() {
                   <img
                     src={profileImage}
                     alt="Esteban Rivas"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover profile-image"
                     style={{ 
                       objectPosition: '10% 50%', 
                       transform: 'scale(1.1)',

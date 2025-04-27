@@ -553,3 +553,27 @@ section[id] {
   contain-intrinsic-size: 320px 320px;
   will-change: transform, opacity;
 }
+
+/* Estilos específicos para la imagen de perfil en móvil */
+@media (max-width: 768px) {
+  .profile-image {
+    object-position: center !important;
+  }
+}
+
+/* Estilos específicos para el rango problemático entre 678px y 1022px */
+@media (min-width: 679px) and (max-width: 1022px) {
+  .profile-container {
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .profile-image-wrapper {
+    width: 240px !important;
+    height: 240px !important;
+    margin-top: 0 !important;
+    margin-bottom: 12px;
+  }
+}
