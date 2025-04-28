@@ -23,6 +23,11 @@ import imgMiuvuu from "../assets/images/app-tienda-ropa/imgMiuvuu.webp";
 import imgMiuvuu2 from "../assets/images/app-tienda-ropa/imgMiuvuu2.webp";
 import imgMiuvuu3 from "../assets/images/app-tienda-ropa/imgMiuvuu3.webp";
 import imgMiuvuu4 from "../assets/images/app-tienda-ropa/imgMiuvuu4.webp";
+import imgMiuvuu5 from "../assets/images/app-tienda-ropa/imgMiuvuu5.webp";
+import imgMiuvuu6 from "../assets/images/app-tienda-ropa/imgMiuvuu6.webp";
+import imgMiuvuu7 from "../assets/images/app-tienda-ropa/imgMiuvuu7.webp";
+import imgMiuvuu8 from "../assets/images/app-tienda-ropa/imgMiuvuu8.webp";
+import imgMiuvuu9 from "../assets/images/app-tienda-ropa/imgMiuvuu9.webp";
 
 import htmlIcon from '../assets/iconos/html5.svg';
 import cssIcon from '../assets/iconos/css.svg';
@@ -81,7 +86,7 @@ function Projects() {
   const getImageStyle = (projectTitle, imageIndex) => {
     if (projectTitle === "Software para Restaurantes") {
       return "object-contain p-2";
-    } else if (projectTitle === "Miuvuu" && imageIndex === 3) { // Última imagen de Miuvuu (formato celular)
+    } else if (projectTitle === "Miuvuu" && (imageIndex === 1 || imageIndex === 3)) { // Imágenes de Miuvuu en formato celular
       return "object-contain p-2";
     } else if (projectTitle === "Resumenes DIDE" && imageIndex === 3) { // Penúltima imagen de Tesis (formato hoja)
       return "object-contain p-2";
@@ -94,7 +99,7 @@ function Projects() {
   const getModalImageStyle = (projectTitle, imageIndex) => {
     if (projectTitle === "Software para Restaurantes") {
       return "p-2";
-    } else if (projectTitle === "Miuvuu" && imageIndex === 3) { // Última imagen de Miuvuu (formato celular)
+    } else if (projectTitle === "Miuvuu" && (imageIndex === 1 || imageIndex === 3)) { // Imágenes de Miuvuu en formato celular
       return "p-2";
     } else if (projectTitle === "Resumenes DIDE" && imageIndex === 3) { // Penúltima imagen de Tesis (formato hoja)
       return "p-2";
@@ -109,7 +114,7 @@ function Projects() {
       title: "Miuvuu",
       description: "Tienda minimalista de moda",
       image: imgMiuvuu,
-      imageGallery: [imgMiuvuu, imgMiuvuu2, imgMiuvuu3, imgMiuvuu4],
+      imageGallery: [imgMiuvuu, imgMiuvuu2, imgMiuvuu3, imgMiuvuu4, imgMiuvuu5, imgMiuvuu6, imgMiuvuu7, imgMiuvuu8, imgMiuvuu9],
       technologies: ["html", "css", "javascript", "react", "python", "docker", "postgresql", "node", "express"],
       links: {
         github: "https://github.com/EstebanA1/miuvuu",
@@ -348,7 +353,12 @@ function Projects() {
                     key={`modal-${selectedProject.id}-${idx}`}
                     src={image}
                     alt={`${selectedProject.title} - Imagen ${idx + 1}`}
-                    className={`project-carousel-image ${idx === modalImageIndex ? 'active' : ''} ${modalImageIndex === 3 && (selectedProject.title === "Miuvuu" || selectedProject.title === "Resumenes DIDE") ? "object-contain" : selectedProject.title === "Software para Restaurantes" ? "object-contain" : "object-cover"}`}
+                    className={`project-carousel-image ${idx === modalImageIndex ? 'active' : ''} ${
+                      selectedProject.title === "Software para Restaurantes" ? "object-contain" : 
+                      (selectedProject.title === "Miuvuu" && (idx === 1 || idx === 3)) ? "object-contain" :
+                      selectedProject.title === "Resumenes DIDE" && idx === 3 ? "object-contain" : 
+                      "object-cover"
+                    } ${getModalImageStyle(selectedProject.title, idx)}`}
                   />
                 ))}
               </div>
@@ -381,7 +391,7 @@ function Projects() {
                 </>
               )}
               
-              {/* Indicadores del carrusel mejorados */}
+              {/* Indicadores del carrusel */}
               {selectedProject.imageGallery.length > 1 && (
                 <div className="project-carousel-indicators visible">
                   {selectedProject.imageGallery.map((_, index) => (

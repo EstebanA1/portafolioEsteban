@@ -1,10 +1,28 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import profileImage from '../assets/images/profile.webp';
 import { useLanguage } from '../contexts/LanguageContext';
 
 function Hero() {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const typedTextRef = useRef(null);
+  
+  // Detectamos si el navegador es Firefox para aplicar estilos específicos
+  const isFirefox = useRef(typeof window !== "undefined" && navigator.userAgent.toLowerCase().includes('firefox'));
+  
+  // Estado para controlar el tamaño de la pantalla
+  const [screenWidth, setScreenWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 1200);
+  
+  // Efecto para actualizar el ancho de la pantalla cuando cambia
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   
   useEffect(() => { // Para ver el efecto de escritura al cambiar el idioma
     const texts = ["Full Stack Developer", "Ingeniero Civil en Informática"]; // No cambian
@@ -49,10 +67,41 @@ function Hero() {
     
     // Iniciar el efecto
     typeEffect();
-    
-    return () => {
-    };
   }, []); 
+  
+  // Definimos los estilos para la imagen según el navegador y tamaño de pantalla
+  const getImageStyles = () => {
+    // Estilos para móvil (menor a 768px)
+    if (screenWidth <= 768) {
+      return {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        objectPosition: 'center',
+        transform: isFirefox.current ? 'scale(1.08)' : 'scale(1.05)'
+      };
+    }
+    
+    // Estilos para tablets (entre 679px y 1022px)
+    if (screenWidth >= 679 && screenWidth <= 1022) {
+      return {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        objectPosition: 'center',
+        transform: isFirefox.current ? 'scale(1.12)' : 'scale(1.08)'
+      };
+    }
+    
+    // Estilos para pantallas más grandes
+    return {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+      objectPosition: isFirefox.current ? '15% 50%' : '10% 50%',
+      transform: isFirefox.current ? 'scale(1.15)' : 'scale(1.1)'
+    };
+  };
   
   return (
     <section id="inicio" className="pt-28 pb-20">
@@ -90,7 +139,10 @@ function Hero() {
           
           {/* Imagen de perfil */}
           <div className="w-full flex justify-center md:w-2/5 md:justify-end profile-container">
-            <div className="relative w-64 h-64 md:w-80 md:h-80 md:-mt-4 profile-image-wrapper">
+            <div 
+              className="relative w-64 h-64 md:w-80 md:h-80 md:-mt-4"
+              style={screenWidth >= 679 && screenWidth <= 1022 ? { width: '240px', height: '240px', marginTop: '0', marginBottom: '12px' } : {}}
+            >
               {/* Efecto de fondo */}
               <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 via-blue-500/20 to-purple-500/20 rounded-full blur-xl"></div>
               {/* Borde y contenedor de la imagen */}
@@ -100,11 +152,8 @@ function Hero() {
                   <img
                     src={profileImage}
                     alt="Esteban Rivas"
-                    className="w-full h-full object-cover profile-image"
-                    style={{ 
-                      objectPosition: '10% 50%', 
-                      transform: 'scale(1.1)',
-                    }}
+                    className="will-change-transform"
+                    style={getImageStyles()}
                     loading="eager"
                     fetchpriority="high"
                   />

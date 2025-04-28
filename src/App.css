@@ -20,6 +20,31 @@ section[id] {
   scroll-margin-top: 10px;
 }
 
+/* Estilos para la imagen de perfil - Corregidos para compatibilidad cross-browser */
+.profile-image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.profile-image {
+  content-visibility: auto;
+  contain-intrinsic-size: 320px 320px;
+  will-change: transform, opacity;
+  object-position: 10% 50%;
+  transform: scale(1.1);
+}
+
+/* Estilos específicos para Firefox */
+@-moz-document url-prefix() {
+  .profile-image {
+    transform: scale(1.15);
+    /* Ajustar la posición para Firefox */
+    object-position: 15% 50%; 
+  }
+}
+
 .social-card-container {
   display: flex;
   flex-direction: column;
@@ -308,6 +333,49 @@ section[id] {
   }
 }
 
+/* Estilos específicos para la imagen de perfil en móvil */
+@media (max-width: 768px) {
+  .profile-image {
+    object-position: center !important;
+    transform: scale(1.05) !important;
+  }
+  
+  /* Firefox específico para móvil */
+  @-moz-document url-prefix() {
+    .profile-image {
+      transform: scale(1.08) !important;
+    }
+  }
+}
+
+/* Estilos específicos para el rango problemático entre 678px y 1022px */
+@media (min-width: 679px) and (max-width: 1022px) {
+  .profile-container {
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .profile-image-wrapper {
+    width: 240px !important;
+    height: 240px !important;
+    margin-top: 0 !important;
+    margin-bottom: 12px;
+  }
+  
+  .profile-image {
+    transform: scale(1.08);
+  }
+  
+  /* Firefox específico para tablets */
+  @-moz-document url-prefix() {
+    .profile-image {
+      transform: scale(1.12);
+    }
+  }
+}
+
 .toast-container {
   position: fixed;
   bottom: 24px;
@@ -548,36 +616,6 @@ section[id] {
   object-fit: cover !important;
 }
 
-.profile-image {
-  content-visibility: auto;
-  contain-intrinsic-size: 320px 320px;
-  will-change: transform, opacity;
-}
-
-/* Estilos específicos para la imagen de perfil en móvil */
-@media (max-width: 768px) {
-  .profile-image {
-    object-position: center !important;
-  }
-}
-
-/* Estilos específicos para el rango problemático entre 678px y 1022px */
-@media (min-width: 679px) and (max-width: 1022px) {
-  .profile-container {
-    margin: 0 auto;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .profile-image-wrapper {
-    width: 240px !important;
-    height: 240px !important;
-    margin-top: 0 !important;
-    margin-bottom: 12px;
-  }
-}
-
 /* Estilos para el carrusel de proyectos con transiciones suaves */
 .project-image-container {
   position: relative;
@@ -608,13 +646,27 @@ section[id] {
   display: flex;
   justify-content: center;
   gap: 4px;
-  padding: 10px 0; /* Incrementado de 8px a 10px para hacerlo más alto */
+  padding: 10px 0 15px;
   /* Cambiando el gradiente para hacerlo más oscuro y más notorio */
   background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5) 70%, transparent);
   z-index: 10;
   transition: opacity 0.3s ease, transform 0.3s ease;
   transform: translateY(100%);
   opacity: 0;
+}
+
+/* Corrección específica para Firefox */
+@-moz-document url-prefix() {
+  .project-carousel-indicators {
+    /* Extendiendo el sombreado en Firefox para eliminar la línea sin sombrear */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 40%, rgba(0, 0, 0, 0.5) 70%, rgba(0, 0, 0, 0.2) 90%, rgba(0, 0, 0, 0) 100%);
+    /* Añadiendo un padding extra inferior para asegurar cobertura completa */
+    padding-bottom: 20px;
+    /* Extendiendo el área para cubrir cualquier espacio en Firefox */
+    margin-bottom: -5px;
+    /* Añadiendo sombra específica para Firefox */
+    box-shadow: 0 -15px 20px 0px rgba(0, 0, 0, 0.4) inset;
+  }
 }
 
 .project-carousel-indicators.visible {
