@@ -88,7 +88,7 @@ function Projects() {
       return "object-contain p-2";
     } else if (projectTitle === "Miuvuu" && (imageIndex === 1 || imageIndex === 3)) { // Imágenes de Miuvuu en formato celular
       return "object-contain p-2";
-    } else if (projectTitle === "Resumenes DIDE" && imageIndex === 3) { // Penúltima imagen de Tesis (formato hoja)
+    } else if (projectTitle === "Resumenes DE" && imageIndex === 3) { // Penúltima imagen de Tesis (formato hoja)
       return "object-contain p-2";
     } else {
       return "object-cover";
@@ -101,7 +101,7 @@ function Projects() {
       return "p-2";
     } else if (projectTitle === "Miuvuu" && (imageIndex === 1 || imageIndex === 3)) { // Imágenes de Miuvuu en formato celular
       return "p-2";
-    } else if (projectTitle === "Resumenes DIDE" && imageIndex === 3) { // Penúltima imagen de Tesis (formato hoja)
+    } else if (projectTitle === "Resumenes DE" && imageIndex === 3) { // Penúltima imagen de Tesis (formato hoja)
       return "p-2";
     } else {
       return "";
@@ -148,14 +148,13 @@ function Projects() {
     },
     {
       id: 4,
-      title: "Resumenes DIDE",
+      title: "Resumenes DE",
       description: "Plataforma complementaria a DINAMICA EGO que explica los cambios en las etapas de cambio de uso de suelo.",
       image: imgTesi,
       imageGallery: [imgTesi, imgTesi2, imgTesi3, imgTesi4, imgTesi5],
       technologies: ["html", "css", "javascript", "react"],
       links: {
         github: "https://github.com/EstebanA1/tesisResumenesDE",
-        linkedin: null,
         demo: "https://estebana1.github.io/tesisResumenesDE/"
       }
     }
@@ -334,7 +333,7 @@ function Projects() {
           className="fixed inset-0 flex items-center justify-center bg-black/80 p-2 sm:p-4 z-50 overflow-y-auto"
           onClick={handleModalClick}
         >
-          <div className="bg-black/90 p-4 sm:p-6 md:p-8 rounded-xl border border-white/10 text-white shadow-lg w-full max-w-2xl relative mx-2 my-4 sm:my-8 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
+          <div className="bg-black/90 p-4 sm:p-6 rounded-xl border border-white/10 text-white shadow-lg w-full max-w-3xl relative mx-2 my-4 sm:my-8 max-h-[95vh] overflow-y-auto">
             <button
               className="absolute top-2 right-2 sm:top-4 sm:right-4 text-gray-400 hover:text-white text-xl z-10 transition-colors duration-200"
               onClick={handleCloseModal}
@@ -345,7 +344,7 @@ function Projects() {
             </button>
             
             {/* Carrusel de imágenes en el modal con transición suave */}
-            <div className="relative mb-4 sm:mb-6 rounded-lg overflow-hidden h-48 sm:h-60 md:h-72">
+            <div className="relative mb-4 sm:mb-6 rounded-lg overflow-hidden h-48 sm:h-56 md:h-64 lg:h-72">
               <div className="project-image-container">
                 {/* Renderizar todas las imágenes con posición absoluta */}
                 {selectedProject.imageGallery.map((image, idx) => (
@@ -356,7 +355,7 @@ function Projects() {
                     className={`project-carousel-image ${idx === modalImageIndex ? 'active' : ''} ${
                       selectedProject.title === "Software para Restaurantes" ? "object-contain" : 
                       (selectedProject.title === "Miuvuu" && (idx === 1 || idx === 3)) ? "object-contain" :
-                      selectedProject.title === "Resumenes DIDE" && idx === 3 ? "object-contain" : 
+                      selectedProject.title === "Resumenes DE" && idx === 3 ? "object-contain" : 
                       "object-cover"
                     } ${getModalImageStyle(selectedProject.title, idx)}`}
                   />
@@ -410,8 +409,8 @@ function Projects() {
               )}
             </div>
             
-            <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">{selectedProject.title}</h3>
-            <p className="text-sm sm:text-base mb-4 sm:mb-6 text-gray-300">{
+            <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">{selectedProject.title}</h3>
+            <p className="text-sm sm:text-base mb-3 sm:mb-4 text-gray-300">{
               selectedProject.id === 1 
                 ? t.miuvuuDesc 
                 : selectedProject.id === 2 
@@ -421,11 +420,11 @@ function Projects() {
                     : t.tesisDesc
             }</p>
             
-            <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
               {selectedProject.technologies.map((tech, index) => (
                 <span 
                   key={index}
-                  className="px-2 sm:px-3 py-1 bg-black/70 text-xs sm:text-sm rounded-full border border-white/10 flex items-center gap-1.5 sm:gap-2"
+                  className="px-2 sm:px-2.5 py-1 bg-black/70 text-xs sm:text-sm rounded-full border border-white/10 flex items-center gap-1.5"
                 >
                   <img
                     src={icons[tech]}
@@ -437,13 +436,13 @@ function Projects() {
               ))}
             </div>
             
-            <div className="flex flex-col gap-2 sm:gap-4 justify-center">
+            <div className="flex flex-col gap-2 justify-center mt-8">
               {selectedProject.links.demo && (
                 <a
                   href={selectedProject.links.demo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full px-4 sm:px-6 py-2 sm:py-3 bg-purple-600 text-white rounded-full font-bold hover:bg-purple-500 hover-scale flex items-center justify-center text-sm sm:text-base"
+                  className="w-full px-4 py-2 bg-purple-600 text-white rounded-full font-bold hover:bg-purple-500 hover-scale flex items-center justify-center text-sm"
                 >
                   {t.verSitioWeb}
                 </a>
@@ -452,26 +451,19 @@ function Projects() {
                 href={selectedProject.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full px-4 sm:px-6 py-2 sm:py-3 bg-green-500 text-black rounded-full font-bold hover:bg-green-400 hover-scale flex items-center justify-center text-sm sm:text-base"
+                className="w-full px-4 py-2 bg-green-500 text-black rounded-full font-bold hover:bg-green-400 hover-scale flex items-center justify-center text-sm"
               >
                 {t.verGithub}
               </a>
-              {selectedProject.links.linkedin ? (
+              {selectedProject.links.linkedin && (
                 <a
                   href={selectedProject.links.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full px-4 sm:px-6 py-2 sm:py-3 bg-transparent border border-white/50 rounded-full font-bold hover:border-white hover-scale flex items-center justify-center text-sm sm:text-base"
+                  className="w-full px-4 py-2 bg-transparent border border-white/50 rounded-full font-bold hover:border-white hover-scale flex items-center justify-center text-sm"
                 >
                   {t.verLinkedin}
                 </a>
-              ) : (
-                <button
-                  className="w-full px-4 sm:px-6 py-2 sm:py-3 bg-transparent border border-gray-500 text-gray-500 rounded-full font-bold cursor-not-allowed flex items-center justify-center text-sm sm:text-base"
-                  disabled
-                >
-                  {t.pendiente}
-                </button>
               )}
             </div>
           </div>
