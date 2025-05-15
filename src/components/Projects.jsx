@@ -83,12 +83,12 @@ function Projects() {
   const { t } = useLanguage();
   
   // Función para determinar el estilo de la imagen basado en su índice y proyecto
-  const getImageStyle = (projectTitle, imageIndex) => {
-    if (projectTitle === "Software para Restaurantes") {
+  const getImageStyle = (projectId, imageIndex) => {
+    if (projectId === 2) { // Software para Restaurantes
       return "object-contain p-2";
-    } else if (projectTitle === "Miuvuu" && (imageIndex === 1 || imageIndex === 3)) { // Imágenes de Miuvuu en formato celular
+    } else if (projectId === 1 && (imageIndex === 1 || imageIndex === 3)) { // Imágenes de Miuvuu en formato celular
       return "object-contain p-2";
-    } else if (projectTitle === "Resumenes DE" && imageIndex === 3) { // Penúltima imagen de Tesis (formato hoja)
+    } else if (projectId === 4 && imageIndex === 3) { // Penúltima imagen de Tesis (formato hoja)
       return "object-contain p-2";
     } else {
       return "object-cover";
@@ -96,12 +96,12 @@ function Projects() {
   };
   
   // Función para determinar el estilo de la imagen en el modal
-  const getModalImageStyle = (projectTitle, imageIndex) => {
-    if (projectTitle === "Software para Restaurantes") {
+  const getModalImageStyle = (projectId, imageIndex) => {
+    if (projectId === 2) { // Software para Restaurantes
       return "p-2";
-    } else if (projectTitle === "Miuvuu" && (imageIndex === 1 || imageIndex === 3)) { // Imágenes de Miuvuu en formato celular
+    } else if (projectId === 1 && (imageIndex === 1 || imageIndex === 3)) { // Imágenes de Miuvuu en formato celular
       return "p-2";
-    } else if (projectTitle === "Resumenes DE" && imageIndex === 3) { // Penúltima imagen de Tesis (formato hoja)
+    } else if (projectId === 4 && imageIndex === 3) { // Penúltima imagen de Tesis (formato hoja)
       return "p-2";
     } else {
       return "";
@@ -112,7 +112,8 @@ function Projects() {
     {
       id: 1,
       title: "Miuvuu",
-      description: "Tienda minimalista de moda",
+      description: t.miuvuuDesc,
+      detailedDescription: t.miuvuuDetailedDesc,
       image: imgMiuvuu,
       imageGallery: [imgMiuvuu, imgMiuvuu2, imgMiuvuu3, imgMiuvuu4, imgMiuvuu5, imgMiuvuu6, imgMiuvuu7, imgMiuvuu8, imgMiuvuu9],
       technologies: ["html", "css", "javascript", "react", "python", "docker", "postgresql", "node", "express"],
@@ -124,8 +125,9 @@ function Projects() {
     },
     {
       id: 2,
-      title: "Software para Restaurantes",
-      description: "Aplicación diseñada para optimizar la experiencia en restaurantes",
+      title: t.restauranteTitle,
+      description: t.restauranteDesc,
+      detailedDescription: t.restauranteDetailedDesc,
       image: imgRest,
       imageGallery: [imgRest, imgRest2, imgRest3, imgRest4, imgRest5],
       technologies: ["html", "css", "typescript", "angular", "mongodb", "node", "express"],
@@ -136,8 +138,9 @@ function Projects() {
     },
     {
       id: 3,
-      title: "Sistema de gestión de citas",
-      description: "Sistema para permisos de edificación, obras y regularización",
+      title: t.citasTitle,
+      description: t.citasDesc,
+      detailedDescription: t.citasDetailedDesc,
       image: imgCal,
       imageGallery: [imgCal, imgCal2, imgCal3, imgCal4, imgCal5, imgCal6],
       technologies: ["html", "css", "javascript", "react", "mongodb", "node", "express"],
@@ -148,8 +151,9 @@ function Projects() {
     },
     {
       id: 4,
-      title: "Resumenes DE",
-      description: "Plataforma complementaria a DINAMICA EGO que explica los cambios en las etapas de cambio de uso de suelo.",
+      title: t.tesisTitle,
+      description: t.tesisDesc,
+      detailedDescription: t.tesisDetailedDesc,
       image: imgTesi,
       imageGallery: [imgTesi, imgTesi2, imgTesi3, imgTesi4, imgTesi5],
       technologies: ["html", "css", "javascript", "react"],
@@ -169,7 +173,7 @@ function Projects() {
     setCurrentImageIndex(initialIndices);
   }, []);
 
-  const CAROUSEL_DELAY = 2000;
+  const CAROUSEL_DELAY = 1000;
 
   useEffect(() => {
     if (hoveredProject) {
@@ -264,7 +268,7 @@ function Projects() {
                       key={`${project.id}-${idx}`}
                       src={image}
                       alt={`${project.title} - Imagen ${idx + 1}`}
-                      className={`project-carousel-image ${idx === (currentImageIndex[project.id] || 0) ? 'active' : ''} ${getImageStyle(project.title, idx)}`}
+                      className={`project-carousel-image ${idx === (currentImageIndex[project.id] || 0) ? 'active' : ''} ${getImageStyle(project.id, idx)}`}
                       loading="lazy"
                     />
                   ))}
@@ -296,13 +300,7 @@ function Projects() {
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2">{project.title}</h3>
                 <p className="text-gray-400 mb-4">
-                  {project.id === 1 
-                    ? t.miuvuuDesc 
-                    : project.id === 2 
-                      ? t.restauranteDesc 
-                      : project.id === 3
-                        ? t.citasDesc
-                        : t.tesisDesc}
+                  {project.description}
                 </p>
                 
                 {/* Tecnologías */}
@@ -353,11 +351,8 @@ function Projects() {
                     src={image}
                     alt={`${selectedProject.title} - Imagen ${idx + 1}`}
                     className={`project-carousel-image ${idx === modalImageIndex ? 'active' : ''} ${
-                      selectedProject.title === "Software para Restaurantes" ? "object-contain" : 
-                      (selectedProject.title === "Miuvuu" && (idx === 1 || idx === 3)) ? "object-contain" :
-                      selectedProject.title === "Resumenes DE" && idx === 3 ? "object-contain" : 
-                      "object-cover"
-                    } ${getModalImageStyle(selectedProject.title, idx)}`}
+                      getModalImageStyle(selectedProject.id, idx)
+                    }`}
                   />
                 ))}
               </div>
@@ -410,15 +405,9 @@ function Projects() {
             </div>
             
             <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">{selectedProject.title}</h3>
-            <p className="text-sm sm:text-base mb-3 sm:mb-4 text-gray-300">{
-              selectedProject.id === 1 
-                ? t.miuvuuDesc 
-                : selectedProject.id === 2 
-                  ? t.restauranteDesc 
-                  : selectedProject.id === 3
-                    ? t.citasDesc
-                    : t.tesisDesc
-            }</p>
+            <p className="text-sm sm:text-base mb-3 sm:mb-4 text-gray-300">
+              {selectedProject.detailedDescription}
+            </p>
             
             <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
               {selectedProject.technologies.map((tech, index) => (

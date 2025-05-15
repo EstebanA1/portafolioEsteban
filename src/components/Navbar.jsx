@@ -7,7 +7,7 @@ function Navbar() {
   const baseUrl = import.meta.env.VITE_PUBLIC_URL || '';
   
   // Determinar qué CV descargar según el idioma
-  const cvFile = language === 'en' ? 'cv-en.pdf' : 'cv.pdf';
+  const cvFile = language === 'en' ? 'CV-EstebanR-EN.pdf' : 'CV-EstebanR.pdf';
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10 py-6 px-6">
@@ -24,16 +24,16 @@ function Navbar() {
             {t.inicio}
           </a>
           <a 
-            href="#redes" 
-            className="hover:text-green-400 hover:scale-110 transition-all duration-300"
-          >
-            {t.redes}
-          </a>
-          <a 
             href="#proyectos" 
             className="hover:text-green-400 hover:scale-110 transition-all duration-300"
           >
             {t.proyectos}
+          </a>
+          <a 
+            href="#redes" 
+            className="hover:text-green-400 hover:scale-110 transition-all duration-300"
+          >
+            {t.redes}
           </a>
           <a 
             href="#contacto" 

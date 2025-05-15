@@ -6,7 +6,7 @@ function SocialSection() {
   const baseUrl = import.meta.env.VITE_PUBLIC_URL || '';
   
   // Determinar qué CV descargar según el idioma
-  const cvFile = language === 'en' ? 'cv-en.pdf' : 'cv.pdf';
+  const cvFile = language === 'en' ? 'CV-EstebanR-EN.pdf' : 'CV-EstebanR.pdf';
   
   return (
     <section id="redes" className="py-20 bg-black/20">

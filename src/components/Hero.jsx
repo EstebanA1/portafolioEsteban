@@ -32,9 +32,9 @@ function Hero() {
     let isDeleting = false;
     
     // Velocidades
-    const typingSpeed = 150;
-    const deletingSpeed = 50;
-    const waitTime = 2000;
+    const typingSpeed = 20;
+    const deletingSpeed = 15;
+    const waitTime = 1500;
     
     function typeEffect() {
       if (typedTextRef.current) {
