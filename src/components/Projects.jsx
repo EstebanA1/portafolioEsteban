@@ -86,7 +86,7 @@ function Projects() {
   const getImageStyle = (projectId, imageIndex) => {
     if (projectId === 2) { // Software para Restaurantes
       return "object-contain p-2";
-    } else if (projectId === 1 && (imageIndex === 1 || imageIndex === 3)) { // Imágenes de Miuvuu en formato celular
+    } else if (projectId === 1 && (imageIndex === 2 || imageIndex === 3)) { // Imágenes de Miuvuu en formato celular
       return "object-contain p-2";
     } else if (projectId === 4 && imageIndex === 3) { // Penúltima imagen de Tesis (formato hoja)
       return "object-contain p-2";
@@ -120,7 +120,7 @@ function Projects() {
       links: {
         github: "https://github.com/EstebanA1/miuvuu",
         linkedin: "https://www.linkedin.com/posts/esteban-rivas-albornoz-2059b3183_ecommerce-fullstack-react-activity-7305317789936828417-mhR2?utm_source=share&utm_medium=member_desktop&rcm=ACoAACtlbGUB2NLtDLRab0fSm5RRihisfexTpnA",
-        demo: "https://miuvuu-production.up.railway.app/"
+        // demo: "https://miuvuu-production.up.railway.app/"
       }
     },
     {
@@ -351,7 +351,7 @@ function Projects() {
                     src={image}
                     alt={`${selectedProject.title} - Imagen ${idx + 1}`}
                     className={`project-carousel-image ${idx === modalImageIndex ? 'active' : ''} ${
-                      getModalImageStyle(selectedProject.id, idx)
+                      getImageStyle(selectedProject.id, idx)
                     }`}
                   />
                 ))}

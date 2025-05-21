@@ -13,7 +13,7 @@ export const translations = {
     contacto: "Contacto",
     
     // Footer
-    derechos: "Todos los derechos reservados",
+    derechos: "",
     
     // Hero Section
     heroTitle: "Desarrollador Full Stack",
@@ -76,7 +76,7 @@ export const translations = {
     contacto: "Contact",
     
     // Footer
-    derechos: "All rights reserved",
+    derechos: "",
     
     // Hero Section
     heroTitle: "Full Stack Developer",

@@ -11,7 +11,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
           {/* Derechos reservados */}
           <div className="text-sm text-center md:text-left">
-            &copy; {year} Esteban Rivas <br /> {t.derechos}.
+            &copy; {year} Esteban Rivas <br /> {t.derechos}
           </div>
 
           {/* Redes sociales */}
