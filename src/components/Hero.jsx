@@ -5,10 +5,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 function Hero() {
   const { t } = useLanguage();
   const typedTextRef = useRef(null);
-  
-  // Detectamos si el navegador es Firefox para aplicar estilos específicos
-  const isFirefox = useRef(typeof window !== "undefined" && navigator.userAgent.toLowerCase().includes('firefox'));
-  
+    
   // Estado para controlar el tamaño de la pantalla
   const [screenWidth, setScreenWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 1200);
   
@@ -34,7 +31,7 @@ function Hero() {
     // Velocidades
     const typingSpeed = 20;
     const deletingSpeed = 15;
-    const waitTime = 1500;
+    const waitTime = 300;
     
     function typeEffect() {
       if (typedTextRef.current) {
@@ -71,35 +68,12 @@ function Hero() {
   
   // Definimos los estilos para la imagen según el navegador y tamaño de pantalla
   const getImageStyles = () => {
-    // Estilos para móvil (menor a 768px)
-    if (screenWidth <= 768) {
-      return {
-        width: '100%',
-        height: '100%',
-        objectFit: 'cover',
-        objectPosition: 'center',
-        transform: isFirefox.current ? 'scale(1.08)' : 'scale(1.05)'
-      };
-    }
-    
-    // Estilos para tablets (entre 679px y 1022px)
-    if (screenWidth >= 679 && screenWidth <= 1022) {
-      return {
-        width: '100%',
-        height: '100%',
-        objectFit: 'cover',
-        objectPosition: 'center',
-        transform: isFirefox.current ? 'scale(1.12)' : 'scale(1.08)'
-      };
-    }
-    
-    // Estilos para pantallas más grandes
     return {
-      width: '100%',
-      height: '100%',
-      objectFit: 'cover',
-      objectPosition: isFirefox.current ? '15% 50%' : '10% 50%',
-      transform: isFirefox.current ? 'scale(1.15)' : 'scale(1.1)'
+        width: '100%',
+        height: '105%',
+        objectFit: 'cover',
+        objectPosition: 'center',
+        transform: 'scale(0.95)'
     };
   };
   
