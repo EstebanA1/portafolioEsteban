@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   min-height: 100vh;
   overflow-y: auto !important;
   scroll-behavior: smooth;
@@ -18,31 +19,6 @@ main {
 
 section[id] {
   scroll-margin-top: 10px;
-}
-
-/* Estilos para la imagen de perfil - Corregidos para compatibilidad cross-browser */
-.profile-image-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.profile-image {
-  content-visibility: auto;
-  contain-intrinsic-size: 320px 320px;
-  will-change: transform, opacity;
-  object-position: 10% 50%;
-  transform: scale(1.1);
-}
-
-/* Estilos específicos para Firefox */
-@-moz-document url-prefix() {
-  .profile-image {
-    transform: scale(1.15);
-    /* Ajustar la posición para Firefox */
-    object-position: 15% 50%; 
-  }
 }
 
 .social-card-container {
@@ -129,9 +105,12 @@ section[id] {
 }
 
 @keyframes blink {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0;
   }
@@ -185,6 +164,7 @@ section[id] {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -226,7 +206,7 @@ section[id] {
   white-space: nowrap;
   will-change: transform;
   animation: banner-scroll 25s linear infinite;
-  width: max-content; /* El ancho se ajustará al contenido exacto */
+  width: max-content;
   backface-visibility: hidden;
   perspective: 1000;
   transform-style: preserve-3d;
@@ -262,15 +242,19 @@ section[id] {
   0% {
     transform: translateX(0);
   }
+
   100% {
-    transform: translateX(calc(-100% / 6)); /* Ajustamos al nuevo número de repeticiones (1/6) */
+    transform: translateX(calc(-100% / 6));
+    /* Ajustamos al nuevo número de repeticiones (1/6) */
   }
 }
 
 @keyframes banner-scroll-reverse {
   0% {
-    transform: translateX(calc(-100% / 6)); /* Ajustamos al nuevo número de repeticiones (1/6) */
+    transform: translateX(calc(-100% / 6));
+    /* Ajustamos al nuevo número de repeticiones (1/6) */
   }
+
   100% {
     transform: translateX(0);
   }
@@ -284,6 +268,7 @@ section[id] {
   .min-h-200 {
     min-height: 200px;
   }
+
   .max-w-md {
     max-width: 100%;
   }
@@ -302,7 +287,7 @@ section[id] {
     height: 60px;
     margin: 0 10px;
   }
-  
+
   .tech-item img {
     width: 35px;
     height: 35px;
@@ -312,67 +297,24 @@ section[id] {
     height: 60px;
     width: 100%;
   }
-  
+
   .tech-banner-1 {
     transform: skewY(-5deg) translateY(8px);
   }
-  
+
   .tech-banner-2 {
     transform: skewY(5deg) translateY(-16px);
   }
-  
+
   .tech-item-banner {
     font-size: 12px;
     margin: 0 20px;
   }
-  
+
   .tech-item-banner img {
     height: 22px;
     width: 22px;
     margin-right: 8px;
-  }
-}
-
-/* Estilos específicos para la imagen de perfil en móvil */
-@media (max-width: 768px) {
-  .profile-image {
-    object-position: center !important;
-    transform: scale(1.05) !important;
-  }
-  
-  /* Firefox específico para móvil */
-  @-moz-document url-prefix() {
-    .profile-image {
-      transform: scale(1.08) !important;
-    }
-  }
-}
-
-/* Estilos específicos para el rango problemático entre 678px y 1022px */
-@media (min-width: 679px) and (max-width: 1022px) {
-  .profile-container {
-    margin: 0 auto;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .profile-image-wrapper {
-    width: 240px !important;
-    height: 240px !important;
-    margin-top: 0 !important;
-    margin-bottom: 12px;
-  }
-  
-  .profile-image {
-    transform: scale(1.08);
-  }
-  
-  /* Firefox específico para tablets */
-  @-moz-document url-prefix() {
-    .profile-image {
-      transform: scale(1.12);
-    }
   }
 }
 
@@ -426,6 +368,7 @@ section[id] {
     transform: translateX(120%);
     opacity: 0;
   }
+
   to {
     transform: translateX(0);
     opacity: 1;
@@ -437,6 +380,7 @@ section[id] {
     transform: translateX(0);
     opacity: 1;
   }
+
   to {
     transform: translateX(120%);
     opacity: 0;
@@ -670,7 +614,7 @@ section[id] {
 }
 
 .project-carousel-indicator {
-  height: 4px; 
+  height: 4px;
   border-radius: 9999px;
   background-color: rgba(255, 255, 255, 0.5);
   transition: all 0.3s ease;
@@ -678,15 +622,74 @@ section[id] {
 
 .project-carousel-indicator.active {
   background-color: #22c55e;
-  width: 24px; 
-  height: 5px; 
+  width: 24px;
+  height: 5px;
 }
 
 .project-carousel-indicator:not(.active) {
-  width: 8px; 
+  width: 8px;
   cursor: pointer;
 }
 
 .project-carousel-indicator:not(.active):hover {
   background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Contenedor base de la imagen de perfil */
+.profile-image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Imagen de perfil base */
+.profile-image {
+  content-visibility: auto;
+  contain-intrinsic-size: 320px 320px;
+  will-change: transform, opacity;
+  object-position: 10% 50%;
+}
+
+/* Corrección de la imagen para navegadores Firefox */
+@-moz-document url-prefix() {
+  .profile-image {
+    transform: scale(1.15);
+    object-position: 15% 50%;
+  }
+}
+
+/* Estilos específicos para la imagen en móvil (celulares, < 768px) */
+@media (max-width: 768px) {
+  .profile-image {
+    object-position: center !important;
+  }
+}
+
+/* Estilos para el rango intermedio (tablets, 679px - 1022px) */
+@media (min-width: 679px) and (max-width: 1022px) {
+  .profile-container {
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .profile-image-wrapper {
+    width: 240px !important;
+    height: 240px !important;
+    margin-top: 0 !important;
+    margin-bottom: 12px;
+  }
+
+  .profile-image {
+    transform: scale(1);
+  }
+
+  /* Firefox específico para resoluciones de tablet */
+  @-moz-document url-prefix() {
+    .profile-image {
+      transform: scale(1.12);
+    }
+  }
 }

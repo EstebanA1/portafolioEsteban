@@ -5,38 +5,41 @@ import { useLanguage } from '../contexts/LanguageContext';
 function Hero() {
   const { t } = useLanguage();
   const typedTextRef = useRef(null);
-    
+
+  // Detectamos si el navegador es Firefox para aplicar estilos específicos
+  const isFirefox = useRef(typeof window !== "undefined" && navigator.userAgent.toLowerCase().includes('firefox'));
+
   // Estado para controlar el tamaño de la pantalla
   const [screenWidth, setScreenWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 1200);
-  
+
   // Efecto para actualizar el ancho de la pantalla cuando cambia
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
     };
-    
+
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-  
+
   useEffect(() => { // Para ver el efecto de escritura al cambiar el idioma
     const texts = ["Full Stack Developer", "Ingeniero Civil en Informática"]; // No cambian
-    
+
     let textIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
-    
+
     // Velocidades
     const typingSpeed = 20;
     const deletingSpeed = 15;
-    const waitTime = 300;
-    
+    const waitTime = 1500;
+
     function typeEffect() {
       if (typedTextRef.current) {
         const currentText = texts[textIndex];
-        
+
         if (!isDeleting && charIndex <= currentText.length) {
           // Escribiendo
           const displayText = currentText.substring(0, charIndex);
@@ -61,29 +64,49 @@ function Hero() {
         }
       }
     }
-    
+
     // Iniciar el efecto
     typeEffect();
-  }, []); 
-  
+  }, []);
+
   // Definimos los estilos para la imagen según el navegador y tamaño de pantalla
   const getImageStyles = () => {
-    return {
+    // Estilos para móvil (menor a 768px)
+    if (screenWidth <= 768) {
+      return {
         width: '100%',
-        height: '105%',
+        height: '100%',
         objectFit: 'cover',
         objectPosition: 'center',
-        transform: 'scale(0.95)'
+      };
+    }
+
+    // Estilos para tablets (entre 679px y 1022px)
+    if (screenWidth >= 679 && screenWidth <= 1022) {
+      return {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        objectPosition: 'center',
+      };
+    }
+
+    // Estilos para pantallas más grandes
+    return {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+      objectPosition: isFirefox.current ? '15% 50%' : '10% 50%',
     };
   };
-  
+
   return (
     <section id="inicio" className="pt-28 pb-20">
       <div className="container mx-auto px-4">
         <div className="flex flex-col-reverse md:flex-row items-start justify-between gap-12">
           {/* Texto de presentación */}
           <div className="md:w-3/4 mt-8 md:mt-4">
-            <h1 
+            <h1
               className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight"
               dangerouslySetInnerHTML={{ __html: t.heroGreeting }}
             ></h1>
@@ -93,27 +116,27 @@ function Hero() {
             <p className="text-xl text-gray-400 mb-8">
               {t.heroSubtitle}
             </p>
-            
+
             {/* Botones de acción */}
             <div className="flex flex-wrap gap-4">
-              <a 
-                href="#proyectos" 
+              <a
+                href="#proyectos"
                 className="px-8 py-3 bg-green-500 text-black rounded-full font-bold hover:bg-green-400 hover:scale-110 transition-all duration-300"
               >
                 {t.proyectos}
               </a>
-              <a 
-                href="#contacto" 
+              <a
+                href="#contacto"
                 className="px-8 py-3 bg-transparent border border-white/50 rounded-full font-bold hover:border-white hover:scale-110 transition-all duration-300"
               >
                 {t.contacto}
               </a>
             </div>
           </div>
-          
+
           {/* Imagen de perfil */}
           <div className="w-full flex justify-center md:w-2/5 md:justify-end profile-container">
-            <div 
+            <div
               className="relative w-64 h-64 md:w-80 md:h-80 md:-mt-4"
               style={screenWidth >= 679 && screenWidth <= 1022 ? { width: '240px', height: '240px', marginTop: '0', marginBottom: '12px' } : {}}
             >
