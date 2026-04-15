@@ -29,6 +29,16 @@ import imgMiuvuu7 from "../assets/images/app-tienda-ropa/imgMiuvuu7.webp";
 import imgMiuvuu8 from "../assets/images/app-tienda-ropa/imgMiuvuu8.webp";
 import imgMiuvuu9 from "../assets/images/app-tienda-ropa/imgMiuvuu9.webp";
 
+import imgBot from "../assets/images/alertas-bot/ImgBot.webp";
+import imgBot2 from "../assets/images/alertas-bot/ImgBot2.webp";
+import imgBot3 from "../assets/images/alertas-bot/ImgBot3.webp";
+import imgBot4 from "../assets/images/alertas-bot/ImgBot4.webp";
+import imgBot5 from "../assets/images/alertas-bot/ImgBot5.webp";
+import imgBot6 from "../assets/images/alertas-bot/ImgBot6.webp";
+import imgBot7 from "../assets/images/alertas-bot/ImgBot7.webp";
+import imgBot8 from "../assets/images/alertas-bot/ImgBot8.webp";
+import imgBot9 from "../assets/images/alertas-bot/ImgBot9.webp";
+
 import htmlIcon from '../assets/iconos/html5.svg';
 import cssIcon from '../assets/iconos/css.svg';
 import javascriptIcon from '../assets/iconos/javascript.svg';
@@ -41,7 +51,11 @@ import pythonIcon from '../assets/iconos/python.svg';
 import postgresqlIcon from '../assets/iconos/postgresql.svg';
 import nodeIcon from '../assets/iconos/nodejs.svg';
 import expressIcon from '../assets/iconos/expressjs.svg';
+import sqliteIcon from '../assets/iconos/sqlite.svg';
+import telegramIcon from '../assets/iconos/telegram.svg';
+import geminiIcon from '../assets/iconos/gemini.svg';
 import { useLanguage } from '../contexts/LanguageContext';
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const icons = {
   html: htmlIcon,
@@ -56,6 +70,9 @@ const icons = {
   postgresql: postgresqlIcon,
   node: nodeIcon,
   express: expressIcon,
+  sqlite: sqliteIcon,
+  telegram: telegramIcon,
+  gemini: geminiIcon,
 };
 
 const techNames = {
@@ -71,6 +88,9 @@ const techNames = {
   mongodb: 'MongoDB',
   node: 'Node.js',
   express: 'Express',
+  sqlite: 'SQLite',
+  telegram: 'Telegram API',
+  gemini: 'Google Gemini',
 };
 
 function Projects() {
@@ -79,12 +99,12 @@ function Projects() {
   const [currentImageIndex, setCurrentImageIndex] = useState({});
   const [hoveredProject, setHoveredProject] = useState(null);
   const [modalImageIndex, setModalImageIndex] = useState(0);
-  
+
   const { t } = useLanguage();
-  
+
   // Función para determinar el estilo de la imagen basado en su índice y proyecto
   const getImageStyle = (projectId, imageIndex) => {
-    if (projectId === 2) { // Software para Restaurantes
+    if (projectId === 2 || projectId === 5) { // Software para Restaurantes y Bot
       return "object-contain p-2";
     } else if (projectId === 1 && (imageIndex === 2 || imageIndex === 3)) { // Imágenes de Miuvuu en formato celular
       return "object-contain p-2";
@@ -94,10 +114,10 @@ function Projects() {
       return "object-cover";
     }
   };
-  
+
   // Función para determinar el estilo de la imagen en el modal
   const getModalImageStyle = (projectId, imageIndex) => {
-    if (projectId === 2) { // Software para Restaurantes
+    if (projectId === 2 || projectId === 5) { // Software para Restaurantes y Bot
       return "p-2";
     } else if (projectId === 1 && (imageIndex === 1 || imageIndex === 3)) { // Imágenes de Miuvuu en formato celular
       return "p-2";
@@ -107,8 +127,21 @@ function Projects() {
       return "";
     }
   };
-  
+
   const projects = [
+    {
+      id: 5,
+      title: t.alertasBotTitle,
+      description: t.alertasBotDesc,
+      detailedDescription: t.alertasBotDetailedDesc,
+      image: imgBot,
+      imageGallery: [imgBot, imgBot2, imgBot3, imgBot4, imgBot5, imgBot6, imgBot7, imgBot8, imgBot9],
+      technologies: ["node", "javascript", "sqlite", "telegram", "gemini"],
+      links: {
+        github: "https://github.com/EstebanA1/alertas-trabajos-bot",
+        telegram: "https://t.me/AlertasTrabajosV2_bot"
+      }
+    },
     {
       id: 1,
       title: "Miuvuu",
@@ -179,7 +212,7 @@ function Projects() {
     if (hoveredProject) {
       const projectId = hoveredProject;
       const project = projects.find(p => p.id === projectId);
-      
+
       if (project && project.imageGallery.length > 1) {
         const intervalId = setInterval(() => {
           setCurrentImageIndex(prev => ({
@@ -187,7 +220,7 @@ function Projects() {
             [projectId]: (prev[projectId] + 1) % project.imageGallery.length
           }));
         }, CAROUSEL_DELAY);
-        
+
         return () => clearInterval(intervalId);
       }
     }
@@ -200,10 +233,10 @@ function Projects() {
       setModalImageIndex((prev) => (prev === 0 ? selectedProject.imageGallery.length - 1 : prev - 1));
     }
   };
-  
+
   const nextModalImage = () => handleModalImageChange('next');
   const prevModalImage = () => handleModalImageChange('prev');
-  
+
   const handleProjectHover = (projectId) => {
     setHoveredProject(projectId);
   };
@@ -227,7 +260,7 @@ function Projects() {
       handleCloseModal();
     }
   };
-  
+
   const currentImage = (project) => {
     const index = currentImageIndex[project.id] || 0;
     return project.imageGallery[index];
@@ -252,8 +285,8 @@ function Projects() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project) => (
-            <div 
-              key={project.id} 
+            <div
+              key={project.id}
               className="bg-black/50 border border-white/10 rounded-xl overflow-hidden group hover:border-green-500/50 transition-colors duration-200 cursor-pointer hover-scale optimize-gpu"
               onClick={() => handleProjectClick(project)}
               onMouseEnter={() => handleProjectHover(project.id)}
@@ -273,16 +306,15 @@ function Projects() {
                     />
                   ))}
                 </div>
-                
+
                 {/* Indicadores del carrusel con fondo */}
                 {project.imageGallery.length > 1 && (
                   <div className={`project-carousel-indicators ${hoveredProject === project.id ? 'visible' : ''}`}>
                     {project.imageGallery.map((_, index) => (
-                      <div 
-                        key={index} 
-                        className={`project-carousel-indicator ${
-                          index === (currentImageIndex[project.id] || 0) ? 'active' : ''
-                        }`}
+                      <div
+                        key={index}
+                        className={`project-carousel-indicator ${index === (currentImageIndex[project.id] || 0) ? 'active' : ''
+                          }`}
                         onClick={(e) => {
                           e.stopPropagation();
                           setCurrentImageIndex(prev => ({
@@ -295,18 +327,18 @@ function Projects() {
                   </div>
                 )}
               </div>
-              
+
               {/* Contenido del proyecto */}
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2">{project.title}</h3>
                 <p className="text-gray-400 mb-4">
                   {project.description}
                 </p>
-                
+
                 {/* Tecnologías */}
                 <div className="flex flex-wrap gap-2 mb-6">
                   {project.technologies.map((tech, index) => (
-                    <span 
+                    <span
                       key={index}
                       className="px-3 py-1 bg-black/70 text-sm rounded-full border border-white/10 flex items-center gap-2"
                     >
@@ -340,27 +372,35 @@ function Projects() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            
+
             {/* Carrusel de imágenes en el modal con transición suave */}
             <div className="relative mb-4 sm:mb-6 rounded-lg overflow-hidden h-48 sm:h-56 md:h-64 lg:h-72">
-              <div className="project-image-container">
-                {/* Renderizar todas las imágenes con posición absoluta */}
-                {selectedProject.imageGallery.map((image, idx) => (
-                  <img
-                    key={`modal-${selectedProject.id}-${idx}`}
-                    src={image}
-                    alt={`${selectedProject.title} - Imagen ${idx + 1}`}
-                    className={`project-carousel-image ${idx === modalImageIndex ? 'active' : ''} ${
-                      getImageStyle(selectedProject.id, idx)
-                    }`}
-                  />
-                ))}
-              </div>
-              
+              <TransformWrapper
+                initialScale={1}
+                minScale={1}
+                wheel={{ step: 0.02 }}
+                pinch={{ step: 2 }}
+                doubleClick={{ disabled: false, mode: "zoomIn" }}
+              >
+                <TransformComponent wrapperStyle={{ width: "100%", height: "100%" }} contentStyle={{ width: "100%", height: "100%" }}>
+                  <div className="project-image-container w-full h-full relative cursor-move">
+                    {/* Renderizar todas las imágenes con posición absoluta */}
+                    {selectedProject.imageGallery.map((image, idx) => (
+                      <img
+                        key={`modal-${selectedProject.id}-${idx}`}
+                        src={image}
+                        alt={`${selectedProject.title} - Imagen ${idx + 1}`}
+                        className={`project-carousel-image cursor-move ${idx === modalImageIndex ? 'active' : ''} ${getImageStyle(selectedProject.id, idx)}`}
+                      />
+                    ))}
+                  </div>
+                </TransformComponent>
+              </TransformWrapper>
+
               {/* Flechas de navegación */}
               {selectedProject.imageGallery.length > 1 && (
                 <>
-                  <button 
+                  <button
                     onClick={(e) => {
                       e.stopPropagation();
                       prevModalImage();
@@ -371,7 +411,7 @@ function Projects() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                     </svg>
                   </button>
-                  <button 
+                  <button
                     onClick={(e) => {
                       e.stopPropagation();
                       nextModalImage();
@@ -384,7 +424,7 @@ function Projects() {
                   </button>
                 </>
               )}
-              
+
               {/* Indicadores del carrusel */}
               {selectedProject.imageGallery.length > 1 && (
                 <div className="project-carousel-indicators visible">
@@ -395,23 +435,22 @@ function Projects() {
                         e.stopPropagation();
                         setModalImageIndex(index);
                       }}
-                      className={`project-carousel-indicator ${
-                        index === modalImageIndex ? 'active' : ''
-                      }`}
+                      className={`project-carousel-indicator ${index === modalImageIndex ? 'active' : ''
+                        }`}
                     />
                   ))}
                 </div>
               )}
             </div>
-            
+
             <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">{selectedProject.title}</h3>
             <p className="text-sm sm:text-base mb-3 sm:mb-4 text-gray-300">
               {selectedProject.detailedDescription}
             </p>
-            
+
             <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
               {selectedProject.technologies.map((tech, index) => (
-                <span 
+                <span
                   key={index}
                   className="px-2 sm:px-2.5 py-1 bg-black/70 text-xs sm:text-sm rounded-full border border-white/10 flex items-center gap-1.5"
                 >
@@ -424,7 +463,7 @@ function Projects() {
                 </span>
               ))}
             </div>
-            
+
             <div className="flex flex-col gap-2 justify-center mt-8">
               {selectedProject.links.demo && (
                 <a
@@ -444,6 +483,16 @@ function Projects() {
               >
                 {t.verGithub}
               </a>
+              {selectedProject.links.telegram && (
+                <a
+                  href={selectedProject.links.telegram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full px-4 py-2 bg-blue-500 text-white rounded-full font-bold hover:bg-blue-400 hover-scale flex items-center justify-center text-sm"
+                >
+                  {t.probarTelegram}
+                </a>
+              )}
               {selectedProject.links.linkedin && (
                 <a
                   href={selectedProject.links.linkedin}

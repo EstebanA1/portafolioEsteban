@@ -11,6 +11,9 @@ import dockerIcon from '../assets/iconos/docker.svg';
 import pythonIcon from '../assets/iconos/python.svg';
 import expressIcon from '../assets/iconos/expressjs.svg';
 import nodeIcon from '../assets/iconos/nodejs.svg';
+import sqliteIcon from '../assets/iconos/sqlite.svg';
+import telegramIcon from '../assets/iconos/telegram.svg';
+import geminiIcon from '../assets/iconos/gemini.svg';
 
 function TechBanner() {
   // Definir arrays de tecnologías
@@ -29,7 +32,10 @@ function TechBanner() {
     { icon: angularIcon, name: 'Angular' },
     { icon: postgresqlIcon, name: 'PostgreSQL' },
     { icon: mongodbIcon, name: 'MongoDB' },
-    { icon: dockerIcon, name: 'Docker' }
+    { icon: sqliteIcon, name: 'SQLite' },
+    { icon: dockerIcon, name: 'Docker' },
+    { icon: telegramIcon, name: 'Telegram API' },
+    { icon: geminiIcon, name: 'Google Gemini' }
   ];
 
   // Creamos una secuencia perfectamente repetible con múltiples repeticiones
